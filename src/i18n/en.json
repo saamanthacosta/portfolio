@@ -1,0 +1,100 @@
+{
+  "nav": {
+    "about": "About",
+    "experience": "Experience",
+    "skills": "Skills",
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+  "hero": {
+    "tag": "Frontend Engineer",
+    "name": "Samantha",
+    "lastName": "Costa",
+    "role": "Crafting accessible, delightful experiences",
+    "cta": "View my journey",
+    "location": "Rio de Janeiro, Brazil"
+  },
+  "about": {
+    "label": "About",
+    "title": "Building the web with purpose",
+    "description": "I'm a software engineer with 5+ years of experience creating, implementing, maintaining, and optimizing complex systems, especially front-end applications. I specialize in making interfaces mobile-first, customizable, accessible, and internationalized.",
+    "highlights": {
+      "a11y": "Web Accessibility",
+      "i18n": "Internationalization",
+      "components": "Component Libraries",
+      "performance": "Performance Optimization"
+    }
+  },
+  "experience": {
+    "label": "Experience",
+    "title": "My journey",
+    "currentlyHere": "Currently here",
+    "confidential": "Project details are confidential",
+    "items": {
+      "dosable": {
+        "company": "Dosable",
+        "role": "Frontend Engineer",
+        "period": "February 2025 — Present"
+      },
+      "objectEdge": {
+        "company": "Object Edge",
+        "role": "Software Engineer",
+        "period": "September 2022 — January 2025",
+        "description": "E-commerce project development with mobile-first approach, server-side rendering, and A/B testing to optimize conversion rates.",
+        "tech": ["Vue.js", "TypeScript", "Tailwind", "AWS", "CommerceTools"]
+      },
+      "personetics": {
+        "company": "Personetics",
+        "role": "Frontend Engineer",
+        "period": "August 2021 — August 2022",
+        "description": "Built and maintained an accessible, internationalized component library used across multiple projects.",
+        "tech": ["React", "Redux", "Styled Components", "Storybook"]
+      },
+      "primeupTrainee": {
+        "company": "PrimeUp",
+        "role": "Trainee",
+        "period": "November 2020 — August 2021",
+        "description": "Developed microservices, REST/SOAP APIs, and worked with large SQL databases following DDD patterns.",
+        "tech": ["C#", ".NET Core", "SQL Server", "Azure", "Jenkins"]
+      },
+      "primeupIntern": {
+        "company": "PrimeUp",
+        "role": "Intern",
+        "period": "April 2019 — November 2020",
+        "description": "Developed dynamic Angular and React applications with Socket.IO integration. Contributed to component library automation.",
+        "tech": ["React", "Angular", "TypeScript", "SonarQube"]
+      }
+    }
+  },
+  "skills": {
+    "label": "Skills",
+    "title": "What I work with",
+    "categories": {
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "cloud": "Cloud",
+      "database": "Database"
+    }
+  },
+  "projects": {
+    "label": "Projects",
+    "title": "Coming soon",
+    "description": "I'm working on showcasing some projects. Stay tuned!"
+  },
+  "contact": {
+    "label": "Contact",
+    "title": "Let's connect",
+    "description": "Interested in working together? Feel free to reach out!",
+    "email": "Email",
+    "linkedin": "LinkedIn",
+    "github": "GitHub"
+  },
+  "footer": {
+    "copyright": "© 2025 Samantha Costa. Built with Vue.js."
+  },
+  "accessibility": {
+    "themeToggle": "Toggle theme",
+    "languageToggle": "Switch language",
+    "scrollToTop": "Scroll to top"
+  }
+}
