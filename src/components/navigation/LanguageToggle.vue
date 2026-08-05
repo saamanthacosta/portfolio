@@ -14,7 +14,7 @@ interface LocaleOption {
 const { t } = useI18n()
 
 const options: readonly LocaleOption[] = [
-  { value: 'en', flag: '🇺🇸', code: 'EN', label: 'English' },
+  { value: 'en', flag: '🇺🇸', code: 'EN-US', label: 'English' },
   { value: 'pt-BR', flag: '🇧🇷', code: 'PT-BR', label: 'Português' },
 ] as const
 
