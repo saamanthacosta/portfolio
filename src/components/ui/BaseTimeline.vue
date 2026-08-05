@@ -1,70 +1,76 @@
 <script setup lang="ts">
-import { computed, useAttrs } from 'vue'
+import { computed, onMounted, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+import BaseTypography from './BaseTypography.vue'
+import TimelineItem from '../timeline/TimelineItem.vue'
+import type { ExperienceRecord } from '../../data/experience'
+import { experience } from '../../data/experience'
 
-type TimelineOrientation = 'vertical' | 'horizontal'
-type TimelineSpacing = 'compact' | 'default' | 'relaxed'
-type TimelineElement = 'ol' | 'ul' | 'div'
+const { t } = useI18n()
 
-interface BaseTimelineProps {
-  orientation?: TimelineOrientation
-  spacing?: TimelineSpacing
-  element?: TimelineElement
-  label?: string
-}
+const sectionRef = ref<HTMLElement | null>(null)
+const isVisible = ref(false)
 
-const props = withDefaults(defineProps<BaseTimelineProps>(), {
-  orientation: 'vertical',
-  spacing: 'default',
-  element: 'ol',
-  label: undefined,
-})
+onMounted(() => {
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry && entry.isIntersecting) {
+        isVisible.value = true
+        observer.disconnect()
+      }
+    },
+    { threshold: 0.1 },
+  )
 
-const attrs = useAttrs()
-
-const spacingClasses = computed<string>(() => {
-  if (props.orientation === 'horizontal') {
-    switch (props.spacing) {
-      case 'compact':
-        return 'gap-3'
-      case 'relaxed':
-        return 'gap-10'
-      case 'default':
-      default:
-        return 'gap-6'
-    }
-  }
-  switch (props.spacing) {
-    case 'compact':
-      return 'space-y-4'
-    case 'relaxed':
-      return 'space-y-12'
-    case 'default':
-    default:
-      return 'space-y-6'
+  if (sectionRef.value) {
+    observer.observe(sectionRef.value)
   }
 })
 
-const orientationClasses = computed<string>(() => {
-  if (props.orientation === 'horizontal') {
-    return 'flex flex-row items-start overflow-x-auto'
-  }
-  return 'flex flex-col'
-})
+const items = computed<ExperienceRecord[]>(() =>
+  experience.map((item) => ({
+    ...item,
+    company: item.company.includes('.') ? t(item.company) : item.company,
+    role: item.role.includes('.') ? t(item.role) : item.role,
+    description:
+      item.description && item.description.includes('.')
+        ? t(item.description)
+        : item.description,
+  })),
+)
 
-const ariaRole = computed(() => (props.label ? 'list' : undefined))
-const ariaLabel = computed(() => props.label)
-
-const combinedClasses = computed<string>(() => [orientationClasses.value, spacingClasses.value].join(' '))
+const totalItems = computed<number>(() => experience.length)
 </script>
 
 <template>
-  <component
-    :is="props.element"
-    :class="combinedClasses"
-    :aria-label="ariaLabel"
-    :role="ariaRole"
-    v-bind="attrs"
+  <section
+    id="experience"
+    ref="sectionRef"
+    class="py-24 md:py-32 bg-white dark:bg-zinc-900"
   >
-    <slot />
-  </component>
+    <div class="max-w-3xl mx-auto px-6">
+      <div
+        class="text-center mb-16 transition-all duration-500 ease-out"
+        :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'"
+      >
+        <BaseTypography variant="caption" tone="accent" class="mb-4">
+          {{ t('experience.label') }}
+        </BaseTypography>
+        <BaseTypography variant="h2" tone="muted">
+          {{ t('experience.title') }}
+        </BaseTypography>
+      </div>
+
+      <ol class="relative space-y-6" aria-label="Experience">
+        <TimelineItem
+          v-for="(item, index) in items"
+          :key="item.id"
+          :item="item"
+          :index="index"
+          :is-visible="isVisible"
+          :total-items="totalItems"
+        />
+      </ol>
+    </div>
+  </section>
 </template>

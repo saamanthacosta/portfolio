@@ -5,7 +5,7 @@ import { useTheme } from './composables/useTheme'
 import AppNav from './components/navigation/AppNav.vue'
 import HeroSection from './components/hero/HeroSection.vue'
 import AboutSection from './components/about/AboutSection.vue'
-import TimelineSection from './components/timeline/TimelineSection.vue'
+import BaseTimeline from './components/ui/BaseTimeline.vue'
 import SkillsSection from './components/skills/SkillsSection.vue'
 import ProjectsSection from './components/projects/ProjectsSection.vue'
 import ContactSection from './components/contact/ContactSection.vue'
@@ -27,7 +27,7 @@ onMounted(() => {
     <main>
       <HeroSection />
       <AboutSection />
-      <TimelineSection />
+      <BaseTimeline />
       <SkillsSection />
       <ProjectsSection />
       <ContactSection />
