@@ -31,13 +31,13 @@ onMounted(() => {
         class="text-center mb-12 transition-all duration-500 ease-out"
         :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'"
       >
-        <BaseTypography variant="eyebrow" tone="accent" class="mb-4">
+        <BaseTypography variant="caption" tone="accent" class="mb-4">
           {{ $t('projects.label') }}
         </BaseTypography>
-        <BaseTypography variant="heading" class="mb-4">
+        <BaseTypography variant="h2" class="mb-4">
           {{ $t('projects.title') }}
         </BaseTypography>
-        <BaseTypography variant="lead" tone="muted">
+        <BaseTypography variant="large-body" tone="muted">
           {{ $t('projects.description') }}
         </BaseTypography>
       </div>

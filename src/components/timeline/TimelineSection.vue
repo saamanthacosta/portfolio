@@ -48,10 +48,10 @@ const totalItems = computed<number>(() => experience.length)
         class="text-center mb-16 transition-all duration-500 ease-out"
         :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'"
       >
-        <BaseTypography variant="eyebrow" tone="accent" class="mb-4">
+        <BaseTypography variant="caption" tone="accent" class="mb-4">
           {{ t('experience.label') }}
         </BaseTypography>
-        <BaseTypography variant="heading" tone="muted">
+        <BaseTypography variant="h2" tone="muted">
           {{ t('experience.title') }}
         </BaseTypography>
       </div>

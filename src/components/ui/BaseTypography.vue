@@ -1,15 +1,6 @@
 <script setup lang="ts">
 import { computed, useAttrs } from 'vue'
 
-type TypographyVariant =
-  | 'display'
-  | 'heading'
-  | 'subheading'
-  | 'lead'
-  | 'body'
-  | 'caption'
-  | 'eyebrow'
-  | 'mono'
 type TypographyTone = 'default' | 'muted' | 'primary' | 'accent' | 'inverse'
 type TypographyElement =
   | 'h1'
@@ -25,7 +16,18 @@ type TypographyElement =
 type TypographyAlign = 'left' | 'center' | 'right'
 
 interface BaseTypographyProps {
-  variant?: TypographyVariant
+  variant?:
+    | 'h1'
+    | 'h2'
+    | 'h3'
+    | 'h4'
+    | 'h5'
+    | 'h6'
+    | 'large-body'
+    | 'body'
+    | 'small-body'
+    | 'caption'
+    | 'mono'
   tone?: TypographyTone
   as?: TypographyElement
   align?: TypographyAlign
@@ -45,40 +47,43 @@ const attrs = useAttrs()
 const resolvedElement = computed<TypographyElement>(() => {
   if (props.as) return props.as
   switch (props.variant) {
-    case 'display':
-      return 'h1'
-    case 'heading':
-      return 'h2'
-    case 'subheading':
-      return 'h3'
-    case 'lead':
+    case 'h1':
+    case 'h2':
+    case 'h3':
+    case 'h4':
+    case 'h5':
+    case 'h6':
+      return props.variant
+    case 'large-body':
+    case 'body':
+    case 'small-body':
       return 'p'
     case 'caption':
-      return 'span'
-    case 'eyebrow':
-      return 'span'
     case 'mono':
       return 'span'
-    case 'body':
-    default:
-      return 'p'
   }
 })
 
 const variantClasses = computed<string>(() => {
   switch (props.variant) {
-    case 'display':
+    case 'h1':
       return 'font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl'
-    case 'heading':
+    case 'h2':
       return 'font-heading text-3xl md:text-4xl'
-    case 'subheading':
+    case 'h3':
       return 'font-heading text-xl md:text-2xl'
-    case 'lead':
-      return 'text-lg md:text-xl font-medium'
+    case 'h4':
+      return 'font-heading text-lg md:text-xl'
+    case 'h5':
+      return 'font-body text-base md:text-lg font-semibold'
+    case 'h6':
+      return 'font-body text-sm md:text-base font-semibold'
+    case 'large-body':
+      return 'text-lg leading-relaxed'
+    case 'small-body':
+      return 'text-sm'
     case 'caption':
-      return 'text-xs'
-    case 'eyebrow':
-      return 'text-sm font-semibold uppercase tracking-wider'
+      return 'text-xs font-semibold uppercase tracking-wider'
     case 'mono':
       return 'font-mono text-xs font-medium'
     case 'body':

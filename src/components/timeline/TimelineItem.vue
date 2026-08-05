@@ -75,7 +75,7 @@ const isLast = computed<boolean>(() => props.index >= props.totalItems - 1)
             </BaseBadge>
           </div>
 
-          <BaseTypography variant="subheading" class="mb-1">
+          <BaseTypography variant="h3" class="mb-1">
             {{ item.company }}
           </BaseTypography>
           <BaseTypography variant="body" tone="primary" class="mb-4 font-medium">
@@ -106,7 +106,7 @@ const isLast = computed<boolean>(() => props.index >= props.totalItems - 1)
           </BaseCard>
 
           <div v-if="item.tech.length > 0" class="space-y-2">
-            <BaseTypography variant="eyebrow" tone="muted" class="text-[10px]">
+            <BaseTypography variant="caption" tone="muted" class="text-[10px]">
               Tech Stack
             </BaseTypography>
             <div class="flex flex-wrap gap-2">

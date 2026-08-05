@@ -47,13 +47,13 @@ const highlights: Highlight[] = [
           class="transition-all duration-500 ease-out"
           :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'"
         >
-          <BaseTypography variant="eyebrow" tone="accent" class="mb-4">
+          <BaseTypography variant="caption" tone="accent" class="mb-4">
             {{ $t('about.label') }}
           </BaseTypography>
-          <BaseTypography variant="heading" class="mb-6 leading-tight">
+          <BaseTypography variant="h2" class="mb-6 leading-tight">
             {{ $t('about.title') }}
           </BaseTypography>
-          <BaseTypography variant="lead" tone="muted" class="mb-8 leading-relaxed">
+          <BaseTypography variant="large-body" tone="muted" class="mb-8 leading-relaxed">
             {{ $t('about.description') }}
           </BaseTypography>
 
@@ -74,7 +74,7 @@ const highlights: Highlight[] = [
                     <path :d="item.icon" />
                   </BaseIcon>
                 </div>
-                <BaseTypography variant="caption" tone="muted" class="pt-2 font-medium">
+                <BaseTypography variant="small-body" tone="muted" class="pt-2 font-medium">
                   {{ $t(`about.highlights.${item.key}`) }}
                 </BaseTypography>
               </div>
@@ -94,10 +94,10 @@ const highlights: Highlight[] = [
             style="background: linear-gradient(135deg, #fdf2f2 0%, #f0f5f1 100%);"
           />
           <div class="absolute text-center z-10">
-            <BaseTypography variant="display" tone="primary" class="text-7xl block">
+            <BaseTypography variant="h1" tone="primary" class="text-7xl block">
               5+
             </BaseTypography>
-            <BaseTypography variant="caption" tone="muted" class="mt-2 block">
+            <BaseTypography variant="small-body" tone="muted" class="mt-2 block">
               Years Experience
             </BaseTypography>
           </div>
