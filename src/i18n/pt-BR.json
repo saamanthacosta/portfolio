@@ -1,0 +1,100 @@
+{
+  "nav": {
+    "about": "Sobre",
+    "experience": "Experiência",
+    "skills": "Habilidades",
+    "projects": "Projetos",
+    "contact": "Contato"
+  },
+  "hero": {
+    "tag": "Engenheira Frontend",
+    "name": "Samantha",
+    "lastName": "Costa",
+    "role": "Criando experiências acessíveis e encantadoras",
+    "cta": "Ver minha jornada",
+    "location": "Rio de Janeiro, Brasil"
+  },
+  "about": {
+    "label": "Sobre",
+    "title": "Construindo a web com propósito",
+    "description": "Sou engenheira de software com mais de 5 anos de experiência criando, implementando, mantendo e otimizando sistemas complexos, especialmente aplicações front-end. Especializo-me em criar interfaces mobile-first, customizáveis, acessíveis e internacionalizadas.",
+    "highlights": {
+      "a11y": "Acessibilidade Web",
+      "i18n": "Internacionalização",
+      "components": "Bibliotecas de Componentes",
+      "performance": "Otimização de Performance"
+    }
+  },
+  "experience": {
+    "label": "Experiência",
+    "title": "Minha jornada",
+    "currentlyHere": "Atual",
+    "confidential": "Detalhes do projeto são confidenciais",
+    "items": {
+      "dosable": {
+        "company": "Dosable",
+        "role": "Engenheira Frontend",
+        "period": "Fevereiro 2025 — Presente"
+      },
+      "objectEdge": {
+        "company": "Object Edge",
+        "role": "Engenheira de Software",
+        "period": "Setembro 2022 — Janeiro 2025",
+        "description": "Desenvolvimento de e-commerce com abordagem mobile-first, renderização server-side e testes A/B para otimizar taxas de conversão.",
+        "tech": ["Vue.js", "TypeScript", "Tailwind", "AWS", "CommerceTools"]
+      },
+      "personetics": {
+        "company": "Personetics",
+        "role": "Engenheira Frontend",
+        "period": "Agosto 2021 — Agosto 2022",
+        "description": "Construção e manutenção de bibliotecas de componentes acessíveis e internacionalizadas para múltiplos projetos.",
+        "tech": ["React", "Redux", "Styled Components", "Storybook"]
+      },
+      "primeupTrainee": {
+        "company": "PrimeUp",
+        "role": "Estagiária",
+        "period": "Novembro 2020 — Agosto 2021",
+        "description": "Desenvolvimento de microsserviços, APIs REST/SOAP e trabalho com grandes bancos de dados SQL seguindo padrões DDD.",
+        "tech": ["C#", ".NET Core", "SQL Server", "Azure", "Jenkins"]
+      },
+      "primeupIntern": {
+        "company": "PrimeUp",
+        "role": "Estagiária",
+        "period": "Abril 2019 — Novembro 2020",
+        "description": "Desenvolvimento de aplicações Angular e React com integração Socket.IO. Contribuição para automação de bibliotecas de componentes.",
+        "tech": ["React", "Angular", "TypeScript", "SonarQube"]
+      }
+    }
+  },
+  "skills": {
+    "label": "Habilidades",
+    "title": "Com o que trabalho",
+    "categories": {
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "cloud": "Nuvem",
+      "database": "Banco de Dados"
+    }
+  },
+  "projects": {
+    "label": "Projetos",
+    "title": "Em breve",
+    "description": "Estou preparando alguns projetos para mostrar. Fique de olho!"
+  },
+  "contact": {
+    "label": "Contato",
+    "title": "Vamos nos conectar",
+    "description": "Interessado em trabalhar junto? Entre em contato!",
+    "email": "Email",
+    "linkedin": "LinkedIn",
+    "github": "GitHub"
+  },
+  "footer": {
+    "copyright": "© 2025 Samantha Costa. Feito com Vue.js."
+  },
+  "accessibility": {
+    "themeToggle": "Alternar tema",
+    "languageToggle": "Trocar idioma",
+    "scrollToTop": "Voltar ao topo"
+  }
+}

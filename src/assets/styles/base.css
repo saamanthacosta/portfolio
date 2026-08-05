@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  /* Musgo (Moss Green) palette - PRIMARY */
+  --color-musgo-50: #f0f5f1;
+  --color-musgo-100: #dce8dd;
+  --color-musgo-200: #b8d1ba;
+  --color-musgo-300: #8fba94;
+  --color-musgo-400: #6da375;
+  --color-musgo-500: #5a8a5f;
+  --color-musgo-600: #4a7250;
+  --color-musgo-700: #3d5d42;
+  --color-musgo-800: #2d4531;
+  --color-musgo-900: #1a2a1b;
+   
+  /* Burned Pink palette - ACCENT */
+  --color-pink-50: #fdf2f2;
+  --color-pink-100: #fce4e4;
+  --color-pink-200: #f9d1d1;
+  --color-pink-300: #f3aeae;
+  --color-pink-400: #e88a8a;
+  --color-pink-500: #d97070;
+  --color-pink-600: #c55555;
+  --color-pink-700: #a34343;
+  --color-pink-800: #833838;
+  --color-pink-900: #5f2828;
+
+  /* Font families */
+  --font-heading: "DM Serif Display", Georgia, serif;
+  --font-body: "Outfit", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+}
+
+/* Light Theme (default) */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  color: #27272a;
+  background-color: #fafaf9;
+  transition: background-color 300ms, color 300ms;
+  min-height: 100vh;
+}
+
+/* Dark Theme */
+body.dark {
+  color: #fafaf9;
+  background-color: #09090b;
+}
+
+::selection {
+  background-color: #5a8a5f;
+  color: #fff;
+}
+
+body.dark ::selection {
+  background-color: #3d5d42;
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid #5a8a5f;
+  outline-offset: 2px;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}
+
+a {
+  color: #4a7250;
+  text-decoration: none;
+  transition: color 150ms;
+}
+
+a:hover {
+  color: #3d5d42;
+}
+
+body.dark a:hover {
+  color: #a8c3aa;
+}
+
+/* Custom font utilities */
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Keyframe animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes flowerIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05) rotate(5deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes petalIn {
+  0% {
+    opacity: 0;
+    transform: translateY(60px) scale(0.5);
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes floatGentle {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(2deg);
+  }
+}
+
+/* Animation utilities */
+.animate-flower-in {
+  animation: flowerIn 1.5s ease-out forwards;
+}
+
+.animate-petal-in {
+  animation: petalIn 1.2s ease-out forwards;
+}
+
+.animate-float-gentle {
+  animation: floatGentle 8s ease-in-out infinite;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
