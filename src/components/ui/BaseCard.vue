@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed, useAttrs } from 'vue'
 
+defineOptions({ inheritAttrs: false })
+
 type CardVariant = 'default' | 'muted' | 'dashed' | 'solid'
 type CardPadding = 'none' | 'sm' | 'md' | 'lg'
 type CardRadius = 'none' | 'sm' | 'md' | 'lg' | 'full'
@@ -26,75 +28,57 @@ const props = withDefaults(defineProps<BaseCardProps>(), {
 
 const attrs = useAttrs()
 
-const variantClasses = computed<string>(() => {
-  switch (props.variant) {
-    case 'default':
-      return 'bg-white dark:bg-zinc-900'
-    case 'muted':
-      return 'bg-zinc-50 dark:bg-zinc-800'
-    case 'dashed':
-      return 'bg-zinc-50 dark:bg-zinc-800 border-dashed'
-    case 'solid':
-      return 'bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-700'
+const ownClasses = computed<string>(() => {
+  const variant: Record<CardVariant, string> = {
+    default: 'bg-white dark:bg-zinc-900',
+    muted: 'bg-zinc-50 dark:bg-zinc-800',
+    dashed: 'bg-zinc-50 dark:bg-zinc-800 border-dashed',
+    solid: 'bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-700',
   }
-})
-
-const paddingClasses = computed<string>(() => {
-  switch (props.padding) {
-    case 'none':
-      return ''
-    case 'sm':
-      return 'p-4'
-    case 'lg':
-      return 'p-8'
-    case 'md':
-    default:
-      return 'p-6'
+  const padding: Record<Exclude<CardPadding, 'none'>, string> = {
+    sm: 'p-4',
+    md: 'p-6',
+    lg: 'p-8',
   }
-})
-
-const radiusClasses = computed<string>(() => {
-  switch (props.radius) {
-    case 'none':
-      return 'rounded-none'
-    case 'sm':
-      return 'rounded-xl'
-    case 'md':
-      return 'rounded-2xl'
-    case 'lg':
-      return 'rounded-3xl'
-    case 'full':
-      return 'rounded-full'
+  const radius: Record<Exclude<CardRadius, 'none'>, string> = {
+    sm: 'rounded-xl',
+    md: 'rounded-2xl',
+    lg: 'rounded-3xl',
+    full: 'rounded-full',
   }
-})
-
-const borderClasses = computed<string>(() => {
-  if (!props.bordered) return ''
-  if (props.variant === 'dashed') {
-    return 'border-2 border-zinc-300 dark:border-zinc-600'
-  }
-  return 'border border-zinc-200 dark:border-zinc-700'
-})
-
-const hoverClasses = computed<string>(() =>
-  props.hoverable ? 'transition-all duration-200 hover:-translate-y-1 hover:shadow-lg' : '',
-)
-
-const combinedClasses = computed<string>(() =>
-  [
-    variantClasses.value,
-    paddingClasses.value,
-    radiusClasses.value,
-    borderClasses.value,
-    hoverClasses.value,
+  const border = props.bordered
+    ? props.variant === 'dashed'
+      ? 'border-2 border-zinc-300 dark:border-zinc-600'
+      : 'border border-zinc-200 dark:border-zinc-700'
+    : ''
+  const hover = props.hoverable
+    ? 'transition-all duration-200 hover:-translate-y-1 hover:shadow-lg'
+    : ''
+  return [
+    variant[props.variant],
+    props.padding === 'none' ? '' : padding[props.padding],
+    props.radius === 'none' ? '' : radius[props.radius],
+    border,
+    hover,
   ]
     .filter(Boolean)
-    .join(' '),
+    .join(' ')
+})
+
+const incomingClass = computed<string>(() => {
+  const cls = attrs.class
+  if (typeof cls === 'string') return cls
+  if (Array.isArray(cls)) return cls.filter(Boolean).join(' ')
+  return ''
+})
+
+const mergedClass = computed<string>(() =>
+  [ownClasses.value, incomingClass.value].filter(Boolean).join(' '),
 )
 </script>
 
 <template>
-  <component :is="props.element" :class="combinedClasses" v-bind="attrs">
+  <component :is="props.element" :class="mergedClass">
     <slot />
   </component>
 </template>

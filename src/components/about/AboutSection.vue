@@ -12,9 +12,14 @@ interface Highlight {
 }
 
 const sectionRef = ref<HTMLElement | null>(null)
-const isVisible = ref(false)
+const isVisible = ref(true)
 
 onMounted(() => {
+  if (!sectionRef.value) return
+  const rect = sectionRef.value.getBoundingClientRect()
+  if (rect.top < window.innerHeight && rect.bottom > 0) return
+
+  isVisible.value = false
   const observer = new IntersectionObserver(
     ([entry]) => {
       if (entry && entry.isIntersecting) {
@@ -24,10 +29,7 @@ onMounted(() => {
     },
     { threshold: 0.1 },
   )
-
-  if (sectionRef.value) {
-    observer.observe(sectionRef.value)
-  }
+  observer.observe(sectionRef.value)
 })
 
 const highlights: Highlight[] = [
@@ -73,9 +75,8 @@ const highlights: Highlight[] = [
             variant="muted"
             padding="md"
             radius="md"
-            class="transition-all duration-500"
             :style="{ transitionDelay: `${index * 0.1}s` }"
-            :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'"
+            :class="['transition-all duration-500', isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4']"
           >
             <div class="flex items-start gap-3">
               <div class="w-11 h-11 rounded-lg bg-musgo-100 dark:bg-musgo-900 flex items-center justify-center flex-shrink-0">

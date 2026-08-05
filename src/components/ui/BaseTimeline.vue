@@ -10,9 +10,14 @@ import { experience } from '../../data/experience'
 const { t } = useI18n()
 
 const sectionRef = ref<HTMLElement | null>(null)
-const isVisible = ref(false)
+const isVisible = ref(true)
 
 onMounted(() => {
+  if (!sectionRef.value) return
+  const rect = sectionRef.value.getBoundingClientRect()
+  if (rect.top < window.innerHeight && rect.bottom > 0) return
+
+  isVisible.value = false
   const observer = new IntersectionObserver(
     ([entry]) => {
       if (entry && entry.isIntersecting) {
@@ -22,10 +27,7 @@ onMounted(() => {
     },
     { threshold: 0.1 },
   )
-
-  if (sectionRef.value) {
-    observer.observe(sectionRef.value)
-  }
+  observer.observe(sectionRef.value)
 })
 
 const items = computed<ExperienceRecord[]>(() =>
