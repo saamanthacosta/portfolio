@@ -62,13 +62,13 @@ const socialLinks: SocialLink[] = [
         class="mb-12 transition-all duration-500 ease-out"
         :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'"
       >
-        <BaseTypography variant="caption" tone="accent" class="mb-4">
+        <BaseTypography level="caption" variant="accent" class="mb-4">
           {{ t('contact.label') }}
         </BaseTypography>
-        <BaseTypography variant="h2" class="mb-4">
+        <BaseTypography level="h2" class="mb-4">
           {{ t('contact.title') }}
         </BaseTypography>
-        <BaseTypography variant="large-body" tone="muted">
+        <BaseTypography level="large-body" variant="muted">
           {{ t('contact.description') }}
         </BaseTypography>
       </div>
@@ -96,7 +96,7 @@ const socialLinks: SocialLink[] = [
                 <path :d="link.icon" />
               </BaseIcon>
             </span>
-            <BaseTypography variant="body" class="flex-1 text-left font-medium">
+            <BaseTypography level="body" class="flex-1 text-left font-medium">
               {{ link.label }}
             </BaseTypography>
             <BaseIcon class="text-zinc-400" size="md" decorative>
@@ -109,7 +109,7 @@ const socialLinks: SocialLink[] = [
   </section>
 
   <footer class="py-8 px-6 text-center border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950">
-    <BaseTypography variant="small-body" tone="muted">
+    <BaseTypography level="small-body" variant="muted">
       {{ t('footer.copyright') }}
     </BaseTypography>
   </footer>

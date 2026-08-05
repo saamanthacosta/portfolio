@@ -1,7 +1,21 @@
 <script setup lang="ts">
 import { computed, useAttrs } from 'vue'
 
-type TypographyTone = 'default' | 'muted' | 'primary' | 'accent' | 'inverse'
+type TypographyLevel =
+  | 'h1'
+  | 'h2'
+  | 'h3'
+  | 'h4'
+  | 'h5'
+  | 'h6'
+  | 'large-body'
+  | 'body'
+  | 'small-body'
+  | 'caption'
+  | 'mono'
+
+type TypographyVariant = 'default' | 'muted' | 'primary' | 'accent' | 'inverse'
+
 type TypographyElement =
   | 'h1'
   | 'h2'
@@ -13,30 +27,20 @@ type TypographyElement =
   | 'span'
   | 'div'
   | 'label'
+
 type TypographyAlign = 'left' | 'center' | 'right'
 
 interface BaseTypographyProps {
-  variant?:
-    | 'h1'
-    | 'h2'
-    | 'h3'
-    | 'h4'
-    | 'h5'
-    | 'h6'
-    | 'large-body'
-    | 'body'
-    | 'small-body'
-    | 'caption'
-    | 'mono'
-  tone?: TypographyTone
+  level?: TypographyLevel
+  variant?: TypographyVariant
   as?: TypographyElement
   align?: TypographyAlign
   truncate?: boolean
 }
 
 const props = withDefaults(defineProps<BaseTypographyProps>(), {
-  variant: 'body',
-  tone: 'default',
+  level: 'body',
+  variant: 'default',
   as: undefined,
   align: 'left',
   truncate: false,
@@ -46,14 +50,14 @@ const attrs = useAttrs()
 
 const resolvedElement = computed<TypographyElement>(() => {
   if (props.as) return props.as
-  switch (props.variant) {
+  switch (props.level) {
     case 'h1':
     case 'h2':
     case 'h3':
     case 'h4':
     case 'h5':
     case 'h6':
-      return props.variant
+      return props.level
     case 'large-body':
     case 'body':
     case 'small-body':
@@ -64,8 +68,8 @@ const resolvedElement = computed<TypographyElement>(() => {
   }
 })
 
-const variantClasses = computed<string>(() => {
-  switch (props.variant) {
+const levelClasses = computed<string>(() => {
+  switch (props.level) {
     case 'h1':
       return 'font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl'
     case 'h2':
@@ -92,8 +96,8 @@ const variantClasses = computed<string>(() => {
   }
 })
 
-const toneClasses = computed<string>(() => {
-  switch (props.tone) {
+const variantClasses = computed<string>(() => {
+  switch (props.variant) {
     case 'muted':
       return 'text-zinc-500 dark:text-zinc-400'
     case 'primary':
@@ -126,8 +130,8 @@ const truncateClasses = computed<string>(() =>
 
 const combinedClasses = computed<string>(() =>
   [
+    levelClasses.value,
     variantClasses.value,
-    toneClasses.value,
     alignClasses.value,
     truncateClasses.value,
   ]
