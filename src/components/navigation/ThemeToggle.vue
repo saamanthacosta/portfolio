@@ -1,21 +1,28 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { Sun, Moon, Monitor, Check } from 'lucide-vue-next'
+import type { Component } from 'vue'
 import { useTheme, type Theme } from '../../composables/useTheme'
 import BaseButton from '../ui/BaseButton.vue'
-import BaseIcon from '../ui/BaseIcon.vue'
 
 type ThemeIcon = 'sun' | 'moon' | 'monitor'
 
 interface ThemeOption {
   value: Theme
   label: string
-  icon: ThemeIcon
+  icon: Component
 }
 
 const { theme, setTheme } = useTheme()
 const isOpen = ref(false)
 
-const icon = computed<ThemeIcon>(() => {
+const iconMap: Record<ThemeIcon, Component> = {
+  sun: Sun,
+  moon: Moon,
+  monitor: Monitor,
+}
+
+const currentIcon = computed<ThemeIcon>(() => {
   switch (theme.value) {
     case 'light':
       return 'sun'
@@ -38,9 +45,9 @@ const label = computed<string>(() => {
 })
 
 const options: ThemeOption[] = [
-  { value: 'light', label: 'Light', icon: 'sun' },
-  { value: 'dark', label: 'Dark', icon: 'moon' },
-  { value: 'system', label: 'System', icon: 'monitor' },
+  { value: 'light', label: 'Light', icon: Sun },
+  { value: 'dark', label: 'Dark', icon: Moon },
+  { value: 'system', label: 'System', icon: Monitor },
 ]
 
 const toggleDropdown = (event: MouseEvent) => {
@@ -63,25 +70,12 @@ const selectTheme = (themeValue: Theme) => {
       :aria-expanded="isOpen"
       @click="toggleDropdown"
     >
-      <BaseIcon v-if="icon === 'sun'" size="md" decorative>
-        <circle cx="12" cy="12" r="5" />
-        <line x1="12" y1="1" x2="12" y2="3" />
-        <line x1="12" y1="21" x2="12" y2="23" />
-        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-        <line x1="1" y1="12" x2="3" y2="12" />
-        <line x1="21" y1="12" x2="23" y2="12" />
-        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-      </BaseIcon>
-      <BaseIcon v-else-if="icon === 'moon'" size="md" decorative>
-        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-      </BaseIcon>
-      <BaseIcon v-else size="md" decorative>
-        <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
-        <line x1="8" y1="21" x2="16" y2="21" />
-        <line x1="12" y1="17" x2="12" y2="21" />
-      </BaseIcon>
+      <component
+        :is="iconMap[currentIcon]"
+        :size="20"
+        :stroke-width="2"
+        aria-hidden="true"
+      />
     </BaseButton>
 
     <Transition
@@ -106,27 +100,20 @@ const selectTheme = (themeValue: Theme) => {
             ? 'text-musgo-600 dark:text-musgo-400 bg-musgo-50 dark:bg-musgo-900/30'
             : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-700'"
         >
-          <BaseIcon v-if="option.icon === 'sun'" size="sm" decorative>
-            <circle cx="12" cy="12" r="5" />
-            <line x1="12" y1="1" x2="12" y2="3" />
-            <line x1="12" y1="21" x2="12" y2="23" />
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-            <line x1="1" y1="12" x2="3" y2="12" />
-            <line x1="21" y1="12" x2="23" y2="12" />
-          </BaseIcon>
-          <BaseIcon v-else-if="option.icon === 'moon'" size="sm" decorative>
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-          </BaseIcon>
-          <BaseIcon v-else size="sm" decorative>
-            <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
-            <line x1="8" y1="21" x2="16" y2="21" />
-            <line x1="12" y1="17" x2="12" y2="21" />
-          </BaseIcon>
+          <component
+            :is="option.icon"
+            :size="16"
+            :stroke-width="2"
+            aria-hidden="true"
+          />
           <span>{{ option.label }}</span>
-          <BaseIcon v-if="theme === option.value" size="sm" class="ml-auto text-musgo-500" decorative>
-            <polyline points="20 6 9 17 4 12" />
-          </BaseIcon>
+          <Check
+            v-if="theme === option.value"
+            :size="16"
+            :stroke-width="2.5"
+            class="ml-auto text-musgo-500"
+            aria-hidden="true"
+          />
         </button>
       </div>
     </Transition>

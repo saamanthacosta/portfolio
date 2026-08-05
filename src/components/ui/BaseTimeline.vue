@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import BaseSection from './BaseSection.vue'
 import BaseTypography from './BaseTypography.vue'
 import TimelineItem from '../timeline/TimelineItem.vue'
 import type { ExperienceRecord } from '../../data/experience'
@@ -43,34 +44,32 @@ const totalItems = computed<number>(() => experience.length)
 </script>
 
 <template>
-  <section
-    id="experience"
-    ref="sectionRef"
-    class="py-24 md:py-32 bg-white dark:bg-zinc-900"
-  >
-    <div class="max-w-3xl mx-auto px-6">
-      <div
-        class="text-center mb-16 transition-all duration-500 ease-out"
-        :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'"
-      >
-        <BaseTypography as="caption" variant="accent" class="mb-6">
-          {{ t('experience.label') }}
-        </BaseTypography>
-        <BaseTypography as="h2" variant="muted">
-          {{ t('experience.title') }}
-        </BaseTypography>
-      </div>
+  <BaseSection id="experience" background="white" align="center" container-width="md">
+    <template #caption>
+      <BaseTypography as="caption" variant="accent">
+        {{ t('experience.label') }}
+      </BaseTypography>
+    </template>
+    <template #title>
+      <BaseTypography as="h2" variant="muted">
+        {{ t('experience.title') }}
+      </BaseTypography>
+    </template>
 
-      <ol class="relative space-y-6" aria-label="Experience">
-        <TimelineItem
-          v-for="(item, index) in items"
-          :key="item.id"
-          :item="item"
-          :index="index"
-          :is-visible="isVisible"
-          :total-items="totalItems"
-        />
-      </ol>
-    </div>
-  </section>
+    <ol
+      ref="sectionRef"
+      class="relative space-y-6 transition-all duration-700 ease-out"
+      :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'"
+      aria-label="Experience"
+    >
+      <TimelineItem
+        v-for="(item, index) in items"
+        :key="item.id"
+        :item="item"
+        :index="index"
+        :is-visible="isVisible"
+        :total-items="totalItems"
+      />
+    </ol>
+  </BaseSection>
 </template>

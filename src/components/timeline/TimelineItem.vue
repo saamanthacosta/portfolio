@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { Lock } from 'lucide-vue-next'
 import BaseBadge from '../ui/BaseBadge.vue'
 import BaseCard from '../ui/BaseCard.vue'
-import BaseIcon from '../ui/BaseIcon.vue'
 import BaseTypography from '../ui/BaseTypography.vue'
 import type { ExperienceRecord } from '../../data/experience'
 
@@ -98,10 +98,12 @@ const isLast = computed<boolean>(() => props.index >= props.totalItems - 1)
             :bordered="false"
             class="flex items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400 mb-4"
           >
-            <BaseIcon class="flex-shrink-0 text-pink-500 dark:text-pink-400" size="sm" decorative>
-              <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-            </BaseIcon>
+            <Lock
+              :size="16"
+              :stroke-width="2"
+              class="flex-shrink-0 text-pink-500 dark:text-pink-400"
+              aria-hidden="true"
+            />
             <span>{{ t('experience.confidential') }}</span>
           </BaseCard>
 
