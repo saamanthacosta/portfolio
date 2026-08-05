@@ -36,7 +36,7 @@ const isLink = computed(() => props.element === 'a' || props.href !== undefined)
 const variantClasses = computed<string>(() => {
   switch (props.variant) {
     case 'primary':
-      return 'bg-musgo-500 hover:bg-musgo-600 text-white hover:-translate-y-0.5 hover:shadow-lg transition-all duration-200'
+      return 'bg-musgo-700 hover:bg-musgo-800 text-white hover:-translate-y-0.5 hover:shadow-lg transition-all duration-200'
     case 'secondary':
       return 'bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-900 dark:text-zinc-50 transition-colors duration-150'
     case 'ghost':

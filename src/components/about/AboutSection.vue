@@ -29,8 +29,14 @@ onMounted(() => {
 })
 
 const highlights: Highlight[] = [
-  { key: 'a11y', icon: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z' },
-  { key: 'i18n', icon: 'M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4' },
+  {
+    key: 'a11y',
+    icon: 'M12 2a10 10 0 100 20 10 10 0 000-20zM12 6a2.5 2.5 0 110 5 2.5 2.5 0 010-5zM4 18.5C4 15.5 7.5 13 12 13s8 2.5 8 5.5V20H4v-1.5z',
+  },
+  {
+    key: 'i18n',
+    icon: 'M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0014.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z',
+  },
   {
     key: 'components',
     icon: 'M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z',
@@ -47,7 +53,7 @@ const highlights: Highlight[] = [
           class="transition-all duration-500 ease-out"
           :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'"
         >
-          <BaseTypography as="caption" variant="accent" class="mb-4">
+          <BaseTypography as="caption" variant="accent" class="mb-6">
             {{ $t('about.label') }}
           </BaseTypography>
           <BaseTypography as="h2" class="mb-6 leading-tight">
@@ -68,13 +74,13 @@ const highlights: Highlight[] = [
               :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'"
               :style="{ transitionDelay: `${0.6 + index * 0.1}s` }"
             >
-              <div class="flex items-start gap-3">
+              <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-lg bg-musgo-100 dark:bg-musgo-900 flex items-center justify-center flex-shrink-0">
                   <BaseIcon class="text-musgo-600 dark:text-musgo-400" decorative>
                     <path :d="item.icon" />
                   </BaseIcon>
                 </div>
-                <BaseTypography as="small-body" variant="muted" class="pt-2 font-medium">
+                <BaseTypography as="small-body" variant="muted" class="font-medium leading-snug">
                   {{ $t(`about.highlights.${item.key}`) }}
                 </BaseTypography>
               </div>

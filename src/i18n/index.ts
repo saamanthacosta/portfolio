@@ -44,12 +44,3 @@ export const getLocale = (): Locale => {
   const current = currentLocaleRef.value
   return isLocale(current) ? current : 'en'
 }
-
-export const cycleLocale = (): void => {
-  const currentIndex = VALID_LOCALES.indexOf(getLocale())
-  const nextIndex = (currentIndex + 1) % VALID_LOCALES.length
-  const next = VALID_LOCALES[nextIndex]
-  if (next) {
-    setLocale(next)
-  }
-}

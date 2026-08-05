@@ -62,7 +62,7 @@ const socialLinks: SocialLink[] = [
         class="mb-12 transition-all duration-500 ease-out"
         :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'"
       >
-        <BaseTypography as="caption" variant="accent" class="mb-4">
+        <BaseTypography as="caption" variant="accent" class="mb-6">
           {{ t('contact.label') }}
         </BaseTypography>
         <BaseTypography as="h2" class="mb-4">

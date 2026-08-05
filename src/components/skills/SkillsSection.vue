@@ -50,7 +50,7 @@ const getCategoryIndex = (key: keyof Skills) =>
         class="text-center mb-12 transition-all duration-500 ease-out"
         :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'"
       >
-        <BaseTypography as="caption" variant="accent" class="mb-4">
+        <BaseTypography as="caption" variant="accent" class="mb-6">
           {{ $t('skills.label') }}
         </BaseTypography>
         <BaseTypography as="h2">
