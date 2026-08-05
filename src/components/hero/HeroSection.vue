@@ -107,16 +107,16 @@ const getPosition = (config: FlowerPosition | LeafPosition): Record<string, stri
         {{ t('hero.tag') }}
       </span>
 
-      <BaseTypography level="h1" class="mb-4">
+      <BaseTypography as="h1" class="mb-4">
         <span class="block">{{ t('hero.name') }}</span>
         <span class="block text-pink-600 dark:text-pink-400">{{ t('hero.lastName') }}</span>
       </BaseTypography>
 
-      <BaseTypography level="large-body" variant="muted" class="mb-2 font-medium">
+      <BaseTypography as="large-body" variant="muted" class="mb-2 font-medium">
         {{ t('hero.role') }}
       </BaseTypography>
 
-      <BaseTypography level="small-body" variant="muted" class="mb-10">
+      <BaseTypography as="small-body" variant="muted" class="mb-10">
         {{ t('hero.location') }}
       </BaseTypography>
 

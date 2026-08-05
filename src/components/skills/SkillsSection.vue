@@ -50,10 +50,10 @@ const getCategoryIndex = (key: keyof Skills) =>
         class="text-center mb-12 transition-all duration-500 ease-out"
         :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'"
       >
-        <BaseTypography level="caption" variant="accent" class="mb-4">
+        <BaseTypography as="caption" variant="accent" class="mb-4">
           {{ $t('skills.label') }}
         </BaseTypography>
-        <BaseTypography level="h2">
+        <BaseTypography as="h2">
           {{ $t('skills.title') }}
         </BaseTypography>
       </div>
@@ -76,7 +76,7 @@ const getCategoryIndex = (key: keyof Skills) =>
                 <path :d="categories.find((c) => c.key === categoryKey)?.icon" />
               </BaseIcon>
             </div>
-            <BaseTypography level="h3" class="font-body text-base md:text-lg">
+            <BaseTypography as="h3" class="font-body text-base md:text-lg">
               {{ $t(`skills.categories.${categoryKey}`) }}
             </BaseTypography>
           </div>

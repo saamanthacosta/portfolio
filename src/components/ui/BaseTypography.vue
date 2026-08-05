@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, useAttrs } from 'vue'
 
-type TypographyLevel =
+type TypographyAs =
   | 'h1'
   | 'h2'
   | 'h3'
@@ -13,63 +13,56 @@ type TypographyLevel =
   | 'small-body'
   | 'caption'
   | 'mono'
-
-type TypographyVariant = 'default' | 'muted' | 'primary' | 'accent' | 'inverse'
-
-type TypographyElement =
-  | 'h1'
-  | 'h2'
-  | 'h3'
-  | 'h4'
-  | 'h5'
-  | 'h6'
   | 'p'
   | 'span'
   | 'div'
   | 'label'
 
+type TypographyVariant = 'default' | 'muted' | 'primary' | 'accent' | 'inverse'
 type TypographyAlign = 'left' | 'center' | 'right'
 
 interface BaseTypographyProps {
-  level?: TypographyLevel
+  as?: TypographyAs
   variant?: TypographyVariant
-  as?: TypographyElement
   align?: TypographyAlign
   truncate?: boolean
 }
 
 const props = withDefaults(defineProps<BaseTypographyProps>(), {
-  level: 'body',
+  as: 'body',
   variant: 'default',
-  as: undefined,
   align: 'left',
   truncate: false,
 })
 
 const attrs = useAttrs()
 
-const resolvedElement = computed<TypographyElement>(() => {
-  if (props.as) return props.as
-  switch (props.level) {
+const resolvedElement = computed(() => {
+  switch (props.as) {
     case 'h1':
     case 'h2':
     case 'h3':
     case 'h4':
     case 'h5':
     case 'h6':
-      return props.level
+      return props.as
     case 'large-body':
     case 'body':
     case 'small-body':
       return 'p'
     case 'caption':
     case 'mono':
+    case 'span':
       return 'span'
+    case 'p':
+    case 'div':
+    case 'label':
+      return props.as
   }
 })
 
-const levelClasses = computed<string>(() => {
-  switch (props.level) {
+const typographyClasses = computed<string>(() => {
+  switch (props.as) {
     case 'h1':
       return 'font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl'
     case 'h2':
@@ -91,6 +84,10 @@ const levelClasses = computed<string>(() => {
     case 'mono':
       return 'font-mono text-xs font-medium'
     case 'body':
+    case 'p':
+    case 'span':
+    case 'div':
+    case 'label':
     default:
       return 'text-base'
   }
@@ -130,7 +127,7 @@ const truncateClasses = computed<string>(() =>
 
 const combinedClasses = computed<string>(() =>
   [
-    levelClasses.value,
+    typographyClasses.value,
     variantClasses.value,
     alignClasses.value,
     truncateClasses.value,

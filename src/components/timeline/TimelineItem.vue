@@ -57,11 +57,11 @@ const isLast = computed<boolean>(() => props.index >= props.totalItems - 1)
           class="transition-all duration-200"
         >
           <div class="flex items-center gap-2 mb-3 flex-wrap">
-            <BaseTypography level="mono" variant="muted">
+            <BaseTypography as="mono" variant="muted">
               {{ item.startDate }}
             </BaseTypography>
             <span v-if="item.endDate" class="text-zinc-400 dark:text-zinc-600">→</span>
-            <BaseTypography v-if="item.endDate" level="mono" variant="muted">
+            <BaseTypography v-if="item.endDate" as="mono" variant="muted">
               {{ item.endDate }}
             </BaseTypography>
             <BaseBadge
@@ -75,18 +75,18 @@ const isLast = computed<boolean>(() => props.index >= props.totalItems - 1)
             </BaseBadge>
           </div>
 
-          <BaseTypography level="h3" class="mb-1">
+          <BaseTypography as="h3" class="mb-1">
             {{ item.company }}
           </BaseTypography>
-          <BaseTypography level="body" variant="primary" class="mb-4 font-medium">
+          <BaseTypography as="body" variant="primary" class="mb-4 font-medium">
             {{ item.role }}
           </BaseTypography>
 
-          <BaseTypography v-if="item.description" level="body" variant="muted" class="leading-relaxed mb-4">
+          <BaseTypography v-if="item.description" as="body" variant="muted" class="leading-relaxed mb-4">
             {{ item.description }}
           </BaseTypography>
 
-          <BaseTypography v-else-if="item.isCurrent" level="body" variant="muted" class="mb-4">
+          <BaseTypography v-else-if="item.isCurrent" as="body" variant="muted" class="mb-4">
             Currently working on confidential projects. Building accessible, performant web applications with modern technologies.
           </BaseTypography>
 
@@ -106,7 +106,7 @@ const isLast = computed<boolean>(() => props.index >= props.totalItems - 1)
           </BaseCard>
 
           <div v-if="item.tech.length > 0" class="space-y-2">
-            <BaseTypography level="caption" variant="muted" class="text-[10px]">
+            <BaseTypography as="caption" variant="muted" class="text-[10px]">
               Tech Stack
             </BaseTypography>
             <div class="flex flex-wrap gap-2">
