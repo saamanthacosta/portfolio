@@ -75,18 +75,20 @@ button {
   background: transparent;
 }
 
-a {
-  color: #4a7250;
-  text-decoration: none;
-  transition: color 150ms;
-}
+@layer base {
+  a {
+    color: #4a7250;
+    text-decoration: none;
+    transition: color 150ms;
+  }
 
-a:hover {
-  color: #3d5d42;
-}
+  a:hover {
+    color: #3d5d42;
+  }
 
-body.dark a:hover {
-  color: #a8c3aa;
+  body.dark a:hover {
+    color: #a8c3aa;
+  }
 }
 
 /* Custom font utilities */

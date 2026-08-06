@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { ArrowRight } from 'lucide-vue-next'
 import BaseButton from '../ui/BaseButton.vue'
-import BaseIcon from '../ui/BaseIcon.vue'
 import BaseTypography from '../ui/BaseTypography.vue'
 import HibiscusFlower from './HibiscusFlower.vue'
 import PetalLeaf from './PetalLeaf.vue'
@@ -127,9 +127,7 @@ const getPosition = (config: FlowerPosition | LeafPosition): Record<string, stri
         size="lg"
       >
         {{ t('hero.cta') }}
-        <BaseIcon size="md" decorative>
-          <path d="M5 12h14M12 5l7 7-7 7" />
-        </BaseIcon>
+        <ArrowRight :size="20" :stroke-width="2.5" aria-hidden="true" />
       </BaseButton>
     </div>
   </section>
