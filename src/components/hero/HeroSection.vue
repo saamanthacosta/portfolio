@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import BaseButton from '../ui/BaseButton.vue'
 import BaseIcon from '../ui/BaseIcon.vue'
@@ -27,9 +27,13 @@ interface LeafPosition {
   delay: number
 }
 
+defineOptions({ inheritAttrs: false })
+
 const { t } = useI18n()
 const isMobile = ref(false)
 const isTablet = ref(false)
+
+let resizeHandler: (() => void) | null = null
 
 onMounted(() => {
   const checkSize = () => {
@@ -37,7 +41,14 @@ onMounted(() => {
     isTablet.value = window.innerWidth >= 768 && window.innerWidth < 1024
   }
   checkSize()
-  window.addEventListener('resize', checkSize)
+  resizeHandler = checkSize
+  window.addEventListener('resize', resizeHandler)
+})
+
+onUnmounted(() => {
+  if (resizeHandler) {
+    window.removeEventListener('resize', resizeHandler)
+  }
 })
 
 const flowers = computed<FlowerPosition[]>(() => {
@@ -75,7 +86,10 @@ const getPosition = (config: FlowerPosition | LeafPosition): Record<string, stri
 </script>
 
 <template>
-  <section id="hero" class="min-h-screen min-h-[100dvh] flex items-center justify-center relative overflow-hidden bg-zinc-50 dark:bg-zinc-950">
+  <section
+    id="hero"
+    class="min-h-screen min-h-[100dvh] py-24 md:py-32 flex items-center justify-center relative overflow-hidden bg-zinc-50 dark:bg-zinc-950"
+  >
     <div
       v-for="(flower, index) in flowers"
       :key="`flower-${index}`"
@@ -102,7 +116,7 @@ const getPosition = (config: FlowerPosition | LeafPosition): Record<string, stri
       />
     </div>
 
-    <div class="text-center z-10 max-w-3xl px-6 py-24 md:py-32">
+    <div class="text-center z-10 max-w-5xl w-full px-6">
       <span class="inline-block bg-musgo-100 dark:bg-musgo-900 text-musgo-700 dark:text-musgo-300 px-4 py-2 rounded-full text-sm font-semibold mb-6">
         {{ t('hero.tag') }}
       </span>
