@@ -43,10 +43,10 @@ onMounted(() => {
 const flowers = computed<FlowerPosition[]>(() => {
   const count = isMobile.value ? 1 : isTablet.value ? 2 : 4
   const configs: FlowerPosition[] = [
-    { variant: 1, size: 90, top: '5%', left: '3%', delay: 200 },
-    { variant: 2, size: 70, top: '10%', right: '5%', delay: 400 },
-    { variant: 3, size: 80, bottom: '10%', left: '5%', delay: 300 },
-    { variant: 4, size: 75, bottom: '15%', right: '8%', delay: 500 },
+    { variant: 1, size: 90, top: '4%', left: '2%', delay: 200 },
+    { variant: 2, size: 70, top: '6%', right: '4%', delay: 400 },
+    { variant: 3, size: 80, bottom: '8%', left: '3%', delay: 300 },
+    { variant: 4, size: 75, bottom: '10%', right: '5%', delay: 500 },
   ]
   return configs.slice(0, count)
 })
@@ -54,12 +54,12 @@ const flowers = computed<FlowerPosition[]>(() => {
 const leaves = computed<LeafPosition[]>(() => {
   const count = isMobile.value ? 2 : isTablet.value ? 4 : 6
   const configs: LeafPosition[] = [
-    { variant: 1, size: 30, top: '8%', left: '15%', delay: 200 },
-    { variant: 2, size: 25, top: '15%', left: '30%', delay: 350 },
-    { variant: 3, size: 28, top: '12%', right: '20%', delay: 400 },
-    { variant: 4, size: 22, top: '20%', right: '10%', delay: 250 },
-    { variant: 1, size: 26, bottom: '25%', left: '12%', delay: 300 },
-    { variant: 2, size: 24, bottom: '30%', left: '25%', delay: 450 },
+    { variant: 1, size: 30, top: '2%', left: '32%', delay: 200 },
+    { variant: 2, size: 26, top: '2%', right: '30%', delay: 350 },
+    { variant: 3, size: 28, top: '45%', left: '0.5%', delay: 400 },
+    { variant: 4, size: 22, top: '48%', right: '0.5%', delay: 250 },
+    { variant: 5, size: 26, bottom: '2%', left: '30%', delay: 300 },
+    { variant: 1, size: 24, bottom: '2%', right: '32%', delay: 450 },
   ]
   return configs.slice(0, count)
 })
@@ -79,7 +79,7 @@ const getPosition = (config: FlowerPosition | LeafPosition): Record<string, stri
     <div
       v-for="(flower, index) in flowers"
       :key="`flower-${index}`"
-      class="absolute pointer-events-none opacity-50 dark:opacity-40"
+      class="absolute pointer-events-none opacity-85 dark:opacity-75"
       :style="getPosition(flower)"
     >
       <HibiscusFlower
@@ -92,7 +92,7 @@ const getPosition = (config: FlowerPosition | LeafPosition): Record<string, stri
     <div
       v-for="(leaf, index) in leaves"
       :key="`leaf-${index}`"
-      class="absolute pointer-events-none opacity-40 dark:opacity-30"
+      class="absolute pointer-events-none opacity-70 dark:opacity-60"
       :style="getPosition(leaf)"
     >
       <PetalLeaf
