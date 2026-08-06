@@ -44,7 +44,7 @@ const highlights: Highlight[] = [
   <BaseSection
     id="about"
     background="white"
-    align="left"
+    align="center"
     container-width="xl"
   >
     <template #caption>
@@ -63,12 +63,12 @@ const highlights: Highlight[] = [
       class="grid lg:grid-cols-[1.4fr_1fr] gap-12 lg:gap-20 items-center transition-all duration-700 ease-out"
       :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'"
     >
-      <div>
+      <div class="text-center lg:text-left">
         <BaseTypography as="large-body" variant="muted" class="mb-10 leading-relaxed">
           {{ $t('about.description') }}
         </BaseTypography>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="grid grid-cols-2 gap-4">
           <BaseCard
             v-for="(item, index) in highlights"
             :key="item.key"
@@ -76,10 +76,10 @@ const highlights: Highlight[] = [
             padding="md"
             radius="md"
             :style="{ transitionDelay: `${index * 0.1}s` }"
-            :class="['transition-all duration-500', isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4']"
+            :class="['transition-all duration-500 text-center', isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4']"
           >
-            <div class="flex items-start gap-3">
-              <div class="w-11 h-11 rounded-lg bg-musgo-100 dark:bg-musgo-900 flex items-center justify-center flex-shrink-0">
+            <div class="flex flex-col items-center gap-2">
+              <div class="w-11 h-11 rounded-lg bg-musgo-100 dark:bg-musgo-900 flex items-center justify-center">
                 <component
                   :is="item.icon"
                   :size="22"
@@ -88,7 +88,7 @@ const highlights: Highlight[] = [
                   aria-hidden="true"
                 />
               </div>
-              <BaseTypography as="small-body" variant="muted" class="font-medium leading-snug pt-1.5">
+              <BaseTypography as="small-body" variant="muted" class="font-medium leading-snug">
                 {{ $t(`about.highlights.${item.key}`) }}
               </BaseTypography>
             </div>
