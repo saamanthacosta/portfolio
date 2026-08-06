@@ -41,19 +41,44 @@ onMounted(() => {
 })
 
 const flowers = computed<FlowerPosition[]>(() => {
-  const count = isMobile.value ? 1 : isTablet.value ? 2 : 4
-  const configs: FlowerPosition[] = [
+  if (isMobile.value) {
+    return [
+      { variant: 1, size: 80, bottom: '8%', left: '2%', delay: 200 },
+      { variant: 2, size: 60, top: '90px', right: '4%', delay: 400 },
+    ]
+  }
+  if (isTablet.value) {
+    return [
+      { variant: 1, size: 90, top: '90px', left: '2%', delay: 200 },
+      { variant: 2, size: 70, top: '90px', right: '4%', delay: 400 },
+      { variant: 3, size: 80, bottom: '8%', left: '3%', delay: 300 },
+      { variant: 4, size: 75, bottom: '10%', right: '5%', delay: 500 },
+    ]
+  }
+  return [
     { variant: 1, size: 90, top: '4%', left: '2%', delay: 200 },
     { variant: 2, size: 70, top: '6%', right: '4%', delay: 400 },
     { variant: 3, size: 80, bottom: '8%', left: '3%', delay: 300 },
     { variant: 4, size: 75, bottom: '10%', right: '5%', delay: 500 },
   ]
-  return configs.slice(0, count)
 })
 
 const leaves = computed<LeafPosition[]>(() => {
-  const count = isMobile.value ? 2 : isTablet.value ? 4 : 6
-  const configs: LeafPosition[] = [
+  if (isMobile.value) {
+    return [
+      { variant: 1, size: 28, top: '110px', left: '5%', delay: 200 },
+      { variant: 2, size: 24, bottom: '30%', right: '5%', delay: 350 },
+    ]
+  }
+  if (isTablet.value) {
+    return [
+      { variant: 1, size: 30, top: '90px', left: '32%', delay: 200 },
+      { variant: 2, size: 26, top: '90px', right: '30%', delay: 350 },
+      { variant: 3, size: 28, top: '45%', left: '0.5%', delay: 400 },
+      { variant: 4, size: 22, top: '48%', right: '0.5%', delay: 250 },
+    ]
+  }
+  return [
     { variant: 1, size: 30, top: '2%', left: '32%', delay: 200 },
     { variant: 2, size: 26, top: '2%', right: '30%', delay: 350 },
     { variant: 3, size: 28, top: '45%', left: '0.5%', delay: 400 },
@@ -61,7 +86,6 @@ const leaves = computed<LeafPosition[]>(() => {
     { variant: 5, size: 26, bottom: '2%', left: '30%', delay: 300 },
     { variant: 1, size: 24, bottom: '2%', right: '32%', delay: 450 },
   ]
-  return configs.slice(0, count)
 })
 
 const getPosition = (config: FlowerPosition | LeafPosition): Record<string, string> => {
