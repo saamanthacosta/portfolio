@@ -56,8 +56,8 @@ const flowers = computed<FlowerPosition[]>(() => {
     ]
   }
   return [
-    { variant: 1, size: 90, top: '4%', left: '2%', delay: 200 },
-    { variant: 2, size: 70, top: '6%', right: '4%', delay: 400 },
+    { variant: 1, size: 90, top: '90px', left: '2%', delay: 200 },
+    { variant: 2, size: 70, top: '90px', right: '4%', delay: 400 },
     { variant: 3, size: 80, bottom: '8%', left: '3%', delay: 300 },
     { variant: 4, size: 75, bottom: '10%', right: '5%', delay: 500 },
   ]
@@ -79,8 +79,8 @@ const leaves = computed<LeafPosition[]>(() => {
     ]
   }
   return [
-    { variant: 1, size: 30, top: '2%', left: '32%', delay: 200 },
-    { variant: 2, size: 26, top: '2%', right: '30%', delay: 350 },
+    { variant: 1, size: 30, top: '105px', left: '32%', delay: 200 },
+    { variant: 2, size: 26, top: '105px', right: '30%', delay: 350 },
     { variant: 3, size: 28, top: '45%', left: '0.5%', delay: 400 },
     { variant: 4, size: 22, top: '48%', right: '0.5%', delay: 250 },
     { variant: 5, size: 26, bottom: '2%', left: '30%', delay: 300 },
