@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { skills } from '../../data/experience'
 import type { Skills } from '../../data/experience'
@@ -18,23 +17,6 @@ interface Category {
 }
 
 const { t } = useI18n()
-const sectionRef = ref<InstanceType<typeof BaseSection> | null>(null)
-const isVisible = ref(false)
-
-onMounted(() => {
-  const el = sectionRef.value?.$el as HTMLElement | undefined
-  if (!el) return
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      if (entry && entry.isIntersecting) {
-        isVisible.value = true
-        observer.disconnect()
-      }
-    },
-    { threshold: 0.1 },
-  )
-  observer.observe(el)
-})
 
 const categories: Category[] = [
   { key: 'frontend', icon: 'M16 18l6-6-6-6M8 6l-6 6 6 6', color: 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400' },
@@ -49,57 +31,45 @@ const getCategoryIndex = (key: keyof Skills) =>
 
 <template>
   <BaseSection
-    ref="sectionRef"
     id="skills"
     bg="default"
-    max-width="5xl"
+    :label="t('skills.label')"
+    :title="t('skills.title')"
   >
-    <template #header>
-      <div
-        class="transition-[opacity,transform] duration-500 ease-out"
-        :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'"
-      >
-        <BaseTypography as="caption" variant="accent" class="mb-4 block">
-          {{ t('skills.label') }}
-        </BaseTypography>
-        <BaseTypography as="h2">
-          {{ t('skills.title') }}
-        </BaseTypography>
+    <template #default="{ isVisible }">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <BaseCard
+          v-for="(categorySkills, categoryKey) in skills"
+          :key="categoryKey"
+          variant="default"
+          padding="md"
+          radius="md"
+          hoverable
+          class="transition-[opacity,transform,box-shadow] duration-300"
+          :style="{ transitionDelay: `${0.2 + getCategoryIndex(categoryKey) * 0.15}s` }"
+          :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'"
+        >
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center" :class="categories.find((c) => c.key === categoryKey)?.color">
+              <BaseIcon decorative>
+                <path :d="categories.find((c) => c.key === categoryKey)?.icon" />
+              </BaseIcon>
+            </div>
+            <BaseTypography as="h3" class="font-body text-base md:text-lg">
+              {{ t(`skills.categories.${categoryKey}`) }}
+            </BaseTypography>
+          </div>
+
+          <div class="flex flex-wrap gap-2">
+            <SkillBadge
+              v-for="skill in categorySkills"
+              :key="skill"
+              :label="skill"
+              :category="categoryKey"
+            />
+          </div>
+        </BaseCard>
       </div>
     </template>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <BaseCard
-        v-for="(categorySkills, categoryKey) in skills"
-        :key="categoryKey"
-        variant="default"
-        padding="md"
-        radius="md"
-        hoverable
-        class="transition-[opacity,transform,box-shadow] duration-300"
-        :style="{ transitionDelay: `${0.2 + getCategoryIndex(categoryKey) * 0.15}s` }"
-        :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'"
-      >
-        <div class="flex items-center gap-3 mb-4">
-          <div class="w-10 h-10 rounded-lg flex items-center justify-center" :class="categories.find((c) => c.key === categoryKey)?.color">
-            <BaseIcon decorative>
-              <path :d="categories.find((c) => c.key === categoryKey)?.icon" />
-            </BaseIcon>
-          </div>
-          <BaseTypography as="h3" class="font-body text-base md:text-lg">
-            {{ t(`skills.categories.${categoryKey}`) }}
-          </BaseTypography>
-        </div>
-
-        <div class="flex flex-wrap gap-2">
-          <SkillBadge
-            v-for="skill in categorySkills"
-            :key="skill"
-            :label="skill"
-            :category="categoryKey"
-          />
-        </div>
-      </BaseCard>
-    </div>
   </BaseSection>
 </template>

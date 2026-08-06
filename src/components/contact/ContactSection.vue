@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { contact } from '../../data/experience'
 import BaseCard from '../ui/BaseCard.vue'
@@ -17,23 +17,6 @@ interface SocialLink {
 defineOptions({ inheritAttrs: false })
 
 const { t } = useI18n()
-const sectionRef = ref<InstanceType<typeof BaseSection> | null>(null)
-const isVisible = ref(false)
-
-onMounted(() => {
-  const el = sectionRef.value?.$el as HTMLElement | undefined
-  if (!el) return
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      if (entry && entry.isIntersecting) {
-        isVisible.value = true
-        observer.disconnect()
-      }
-    },
-    { threshold: 0.1 },
-  )
-  observer.observe(el)
-})
 
 const socialLinks = computed<SocialLink[]>(() => [
   {
@@ -59,60 +42,45 @@ const socialLinks = computed<SocialLink[]>(() => [
 
 <template>
   <BaseSection
-    ref="sectionRef"
     id="contact"
     bg="raised"
-    max-width="xl"
+    :label="t('contact.label')"
+    :title="t('contact.title')"
   >
-    <template #header>
-      <div
-        class="transition-[opacity,transform] duration-500 ease-out"
-        :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'"
-      >
-        <BaseTypography as="caption" variant="accent" class="mb-4 block">
-          {{ t('contact.label') }}
-        </BaseTypography>
-        <BaseTypography as="h2" class="mb-4">
-          {{ t('contact.title') }}
-        </BaseTypography>
-        <BaseTypography as="large-body" variant="muted">
-          {{ t('contact.description') }}
-        </BaseTypography>
+    <template #default="{ isVisible }">
+      <div class="flex flex-col gap-4">
+        <BaseCard
+          v-for="(link, index) in socialLinks"
+          :key="link.key"
+          variant="muted"
+          radius="md"
+          hoverable
+          padding="sm"
+          class="transition-[opacity,transform,box-shadow] duration-200"
+          :style="{ transitionDelay: `${0.4 + index * 0.15}s` }"
+          :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'"
+        >
+          <a
+            :href="link.href"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center gap-4 text-zinc-900 dark:text-zinc-50"
+          >
+            <span class="w-12 h-12 flex items-center justify-center bg-musgo-100 dark:bg-musgo-900 rounded-xl text-musgo-600 dark:text-musgo-400 flex-shrink-0">
+              <BaseIcon size="lg" decorative>
+                <path :d="link.icon" />
+              </BaseIcon>
+            </span>
+            <BaseTypography as="body" class="flex-1 text-left font-medium">
+              {{ link.label }}
+            </BaseTypography>
+            <BaseIcon class="text-zinc-400" size="md" decorative>
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </BaseIcon>
+          </a>
+        </BaseCard>
       </div>
     </template>
-
-    <div class="flex flex-col gap-4">
-      <BaseCard
-        v-for="(link, index) in socialLinks"
-        :key="link.key"
-        variant="muted"
-        radius="md"
-        hoverable
-        padding="sm"
-        class="transition-[opacity,transform,box-shadow] duration-200"
-        :style="{ transitionDelay: `${0.4 + index * 0.15}s` }"
-        :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'"
-      >
-        <a
-          :href="link.href"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="flex items-center gap-4 text-zinc-900 dark:text-zinc-50"
-        >
-          <span class="w-12 h-12 flex items-center justify-center bg-musgo-100 dark:bg-musgo-900 rounded-xl text-musgo-600 dark:text-musgo-400 flex-shrink-0">
-            <BaseIcon size="lg" decorative>
-              <path :d="link.icon" />
-            </BaseIcon>
-          </span>
-          <BaseTypography as="body" class="flex-1 text-left font-medium">
-            {{ link.label }}
-          </BaseTypography>
-          <BaseIcon class="text-zinc-400" size="md" decorative>
-            <path d="M5 12h14M12 5l7 7-7 7" />
-          </BaseIcon>
-        </a>
-      </BaseCard>
-    </div>
   </BaseSection>
 
   <footer class="py-8 px-6 text-center border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950">
