@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, useAttrs } from 'vue'
+import { onMounted, ref } from 'vue'
 import BaseTypography from './BaseTypography.vue'
 
 defineOptions({ inheritAttrs: false })
@@ -19,8 +19,6 @@ const props = withDefaults(defineProps<BaseSectionProps>(), {
   title: undefined,
   subtitle: undefined,
 })
-
-const attrs = useAttrs()
 
 const root = ref<HTMLElement | null>(null)
 const isVisible = ref(false)
@@ -47,7 +45,6 @@ const sectionClass =
 
 <template>
   <section
-    v-bind="attrs"
     ref="root"
     :id="id"
     class="py-24 md:py-32"
