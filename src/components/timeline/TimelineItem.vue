@@ -27,17 +27,17 @@ const isLast = computed<boolean>(() => props.index >= props.totalItems - 1)
 
 <template>
   <div
-    class="relative transition-all duration-500 ease-out"
+    class="relative transition-[opacity,transform] duration-500 ease-out"
     :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'"
     :style="{ transitionDelay: `${animationDelay}s` }"
   >
     <div class="flex gap-6 md:gap-8">
       <div class="flex flex-col items-center flex-shrink-0 w-8 md:w-10">
         <div
-          class="w-4 h-4 rounded-full bg-white dark:bg-zinc-800 border-2 transition-all duration-200 z-10"
+          class="w-4 h-4 rounded-full bg-white dark:bg-zinc-800 border-2 transition-[border-color,box-shadow] duration-200 z-10"
           :class="[
             item.isCurrent
-              ? 'border-pink-500 dark:border-pink-400 shadow-[0_0_0_3px_#fafaf9] dark:shadow-[0_0_0_3px_#09090b] animate-pulse'
+              ? 'border-pink-500 dark:border-pink-400 shadow-[0_0_0_3px_#fafaf9] dark:shadow-[0_0_0_3px_#09090b] motion-safe:animate-pulse'
               : 'border-musgo-500 dark:border-musgo-400',
           ]"
         />
@@ -54,7 +54,7 @@ const isLast = computed<boolean>(() => props.index >= props.totalItems - 1)
           padding="md"
           radius="md"
           hoverable
-          class="transition-all duration-200"
+          class="transition-[opacity,transform,box-shadow] duration-200"
         >
           <div class="flex items-center gap-2 mb-3 flex-wrap">
             <BaseTypography as="mono" variant="muted">
@@ -87,14 +87,14 @@ const isLast = computed<boolean>(() => props.index >= props.totalItems - 1)
           </BaseTypography>
 
           <BaseTypography v-else-if="item.isCurrent" as="body" variant="muted" class="mb-4">
-            Currently working on confidential projects. Building accessible, performant web applications with modern technologies.
+            {{ t('experience.confidentialDescription') }}
           </BaseTypography>
 
           <BaseCard
             v-if="isConfidential"
             variant="muted"
             padding="sm"
-            radius="sm"
+            radius="none"
             :bordered="false"
             class="flex items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400 mb-4"
           >
@@ -107,7 +107,7 @@ const isLast = computed<boolean>(() => props.index >= props.totalItems - 1)
 
           <div v-if="item.tech.length > 0" class="space-y-2">
             <BaseTypography as="caption" variant="muted" class="text-[10px]">
-              Tech Stack
+              {{ t('experience.techStack') }}
             </BaseTypography>
             <div class="flex flex-wrap gap-2">
               <BaseBadge
@@ -126,31 +126,3 @@ const isLast = computed<boolean>(() => props.index >= props.totalItems - 1)
     </div>
   </div>
 </template>
-
-<style scoped>
-.animate-pulse {
-  animation: timeline-pulse 2s infinite;
-}
-
-@keyframes timeline-pulse {
-  0%, 100% {
-    box-shadow: 0 0 0 3px #fafaf9, 0 0 0 5px #d97070;
-  }
-  50% {
-    box-shadow: 0 0 0 3px #fafaf9, 0 0 0 8px #f3aeae;
-  }
-}
-
-:global(body.dark) .animate-pulse {
-  animation: timeline-pulse-dark 2s infinite;
-}
-
-@keyframes timeline-pulse-dark {
-  0%, 100% {
-    box-shadow: 0 0 0 3px #09090b, 0 0 0 5px #d97070;
-  }
-  50% {
-    box-shadow: 0 0 0 3px #09090b, 0 0 0 8px #f3aeae;
-  }
-}
-</style>

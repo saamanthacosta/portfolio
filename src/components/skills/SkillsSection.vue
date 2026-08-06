@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { skills } from '../../data/experience'
 import type { Skills } from '../../data/experience'
 import BaseCard from '../ui/BaseCard.vue'
 import BaseIcon from '../ui/BaseIcon.vue'
+import BaseSection from '../ui/BaseSection.vue'
 import BaseTypography from '../ui/BaseTypography.vue'
 import SkillBadge from './SkillBadge.vue'
+
+defineOptions({ inheritAttrs: false })
 
 interface Category {
   key: keyof Skills
@@ -13,24 +16,7 @@ interface Category {
   color: string
 }
 
-const sectionRef = ref<HTMLElement | null>(null)
-const isVisible = ref(false)
-
-onMounted(() => {
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      if (entry && entry.isIntersecting) {
-        isVisible.value = true
-        observer.disconnect()
-      }
-    },
-    { threshold: 0.1 },
-  )
-
-  if (sectionRef.value) {
-    observer.observe(sectionRef.value)
-  }
-})
+const { t } = useI18n()
 
 const categories: Category[] = [
   { key: 'frontend', icon: 'M16 18l6-6-6-6M8 6l-6 6 6 6', color: 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400' },
@@ -44,20 +30,13 @@ const getCategoryIndex = (key: keyof Skills) =>
 </script>
 
 <template>
-  <section id="skills" class="py-24 md:py-32 bg-zinc-50 dark:bg-zinc-950" ref="sectionRef">
-    <div class="max-w-5xl mx-auto px-6">
-      <div
-        class="text-center mb-12 transition-all duration-500 ease-out"
-        :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'"
-      >
-        <BaseTypography as="caption" variant="accent" class="mb-4">
-          {{ $t('skills.label') }}
-        </BaseTypography>
-        <BaseTypography as="h2">
-          {{ $t('skills.title') }}
-        </BaseTypography>
-      </div>
-
+  <BaseSection
+    id="skills"
+    bg="default"
+    :label="t('skills.label')"
+    :title="t('skills.title')"
+  >
+    <template #default="{ isVisible }">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <BaseCard
           v-for="(categorySkills, categoryKey) in skills"
@@ -66,7 +45,7 @@ const getCategoryIndex = (key: keyof Skills) =>
           padding="md"
           radius="md"
           hoverable
-          class="transition-all duration-300"
+          class="transition-[opacity,transform,box-shadow] duration-300"
           :style="{ transitionDelay: `${0.2 + getCategoryIndex(categoryKey) * 0.15}s` }"
           :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'"
         >
@@ -77,7 +56,7 @@ const getCategoryIndex = (key: keyof Skills) =>
               </BaseIcon>
             </div>
             <BaseTypography as="h3" class="font-body text-base md:text-lg">
-              {{ $t(`skills.categories.${categoryKey}`) }}
+              {{ t(`skills.categories.${categoryKey}`) }}
             </BaseTypography>
           </div>
 
@@ -91,6 +70,6 @@ const getCategoryIndex = (key: keyof Skills) =>
           </div>
         </BaseCard>
       </div>
-    </div>
-  </section>
+    </template>
+  </BaseSection>
 </template>

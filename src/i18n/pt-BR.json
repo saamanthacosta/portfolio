@@ -18,6 +18,7 @@
     "label": "Sobre",
     "title": "Construindo a web com propósito",
     "description": "Sou engenheira de software com mais de 5 anos de experiência criando, implementando, mantendo e otimizando sistemas complexos, especialmente aplicações front-end. Especializo-me em criar interfaces mobile-first, customizáveis, acessíveis e internacionalizadas.",
+    "yearsExperience": "Anos de experiência",
     "highlights": {
       "a11y": "Acessibilidade Web",
       "i18n": "Internacionalização",
@@ -30,6 +31,9 @@
     "title": "Minha jornada",
     "currentlyHere": "Atual",
     "confidential": "Detalhes do projeto são confidenciais",
+    "confidentialDescription": "Atualmente trabalho em projetos confidenciais, criando aplicações web acessíveis e performáticas com tecnologias modernas.",
+    "techStack": "Tecnologias",
+    "ariaLabel": "Experiência",
     "items": {
       "dosable": {
         "company": "Dosable",
@@ -74,6 +78,25 @@
       "backend": "Backend",
       "cloud": "Nuvem",
       "database": "Banco de Dados"
+    },
+    "items": {
+      "html-css": "HTML/CSS",
+      "javascript": "JavaScript",
+      "typescript": "TypeScript",
+      "vue": "Vue.js",
+      "react": "React.js",
+      "web-accessibility": "Acessibilidade Web",
+      "state-management": "Gerenciamento de Estado",
+      "tailwind": "Tailwind",
+      "styled-components": "Componentes Estilizados",
+      "node-js": "Node.js",
+      "express": "Express",
+      "csharp": "C#",
+      "php": "PHP",
+      "aws": "AWS",
+      "azure": "Azure",
+      "mysql": "MySQL",
+      "sql-server": "SQL Server"
     }
   },
   "projects": {
@@ -95,6 +118,19 @@
   "accessibility": {
     "themeToggle": "Alternar tema",
     "languageToggle": "Trocar idioma",
-    "scrollToTop": "Voltar ao topo"
+    "selectLanguage": "Selecionar idioma",
+    "scrollToTop": "Voltar ao topo",
+    "skipToContent": "Pular para o conteúdo",
+    "openMenu": "Abrir menu de navegação",
+    "closeMenu": "Fechar menu de navegação",
+    "mobileNavigation": "Navegação móvel",
+    "mainNavigation": "Navegação principal",
+    "lightMode": "Modo claro",
+    "darkMode": "Modo escuro",
+    "systemMode": "Modo do sistema",
+    "light": "Claro",
+    "dark": "Escuro",
+    "system": "Sistema",
+    "themeOptions": "Opções de tema"
   }
 }

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useTheme } from './composables/useTheme'
+import { getLocale } from './i18n'
 
 import AppNav from './components/navigation/AppNav.vue'
 import HeroSection from './components/hero/HeroSection.vue'
@@ -13,18 +14,22 @@ import ContactSection from './components/contact/ContactSection.vue'
 useTheme()
 
 onMounted(() => {
-  const storedLocale = localStorage.getItem('portfolio-locale')
-  if (storedLocale) {
-    document.documentElement.setAttribute('lang', storedLocale === 'pt-BR' ? 'pt-BR' : 'en')
-  }
+  const locale = getLocale()
+  document.documentElement.setAttribute('lang', locale === 'pt-BR' ? 'pt-BR' : 'en')
 })
 </script>
 
 <template>
   <div id="app">
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only fixed top-4 left-4 z-50 rounded-lg bg-white px-4 py-3 text-sm font-semibold text-zinc-900 shadow-lg focus:outline-none focus:ring-2 focus:ring-musgo-500 dark:bg-zinc-800 dark:text-zinc-50"
+    >
+      {{ $t('accessibility.skipToContent') }}
+    </a>
     <AppNav />
 
-    <main>
+    <main id="main-content" tabindex="-1">
       <HeroSection />
       <AboutSection />
       <BaseTimeline />

@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { contact } from '../../data/experience'
 import BaseCard from '../ui/BaseCard.vue'
 import BaseIcon from '../ui/BaseIcon.vue'
+import BaseSection from '../ui/BaseSection.vue'
 import BaseTypography from '../ui/BaseTypography.vue'
-import { useI18n } from 'vue-i18n'
 
 interface SocialLink {
   key: string
@@ -13,27 +14,11 @@ interface SocialLink {
   icon: string
 }
 
+defineOptions({ inheritAttrs: false })
+
 const { t } = useI18n()
-const sectionRef = ref<HTMLElement | null>(null)
-const isVisible = ref(false)
 
-onMounted(() => {
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      if (entry && entry.isIntersecting) {
-        isVisible.value = true
-        observer.disconnect()
-      }
-    },
-    { threshold: 0.1 },
-  )
-
-  if (sectionRef.value) {
-    observer.observe(sectionRef.value)
-  }
-})
-
-const socialLinks: SocialLink[] = [
+const socialLinks = computed<SocialLink[]>(() => [
   {
     key: 'email',
     label: t('contact.email'),
@@ -52,27 +37,17 @@ const socialLinks: SocialLink[] = [
     href: contact.github,
     icon: 'M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22',
   },
-]
+])
 </script>
 
 <template>
-  <section id="contact" class="py-24 md:py-32 bg-white dark:bg-zinc-900" ref="sectionRef">
-    <div class="max-w-xl mx-auto px-6 text-center">
-      <div
-        class="mb-12 transition-all duration-500 ease-out"
-        :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'"
-      >
-        <BaseTypography as="caption" variant="accent" class="mb-4">
-          {{ t('contact.label') }}
-        </BaseTypography>
-        <BaseTypography as="h2" class="mb-4">
-          {{ t('contact.title') }}
-        </BaseTypography>
-        <BaseTypography as="large-body" variant="muted">
-          {{ t('contact.description') }}
-        </BaseTypography>
-      </div>
-
+  <BaseSection
+    id="contact"
+    bg="raised"
+    :label="t('contact.label')"
+    :title="t('contact.title')"
+  >
+    <template #default="{ isVisible }">
       <div class="flex flex-col gap-4">
         <BaseCard
           v-for="(link, index) in socialLinks"
@@ -81,7 +56,7 @@ const socialLinks: SocialLink[] = [
           radius="md"
           hoverable
           padding="sm"
-          class="transition-all duration-200"
+          class="transition-[opacity,transform,box-shadow] duration-200"
           :style="{ transitionDelay: `${0.4 + index * 0.15}s` }"
           :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'"
         >
@@ -105,8 +80,8 @@ const socialLinks: SocialLink[] = [
           </a>
         </BaseCard>
       </div>
-    </div>
-  </section>
+    </template>
+  </BaseSection>
 
   <footer class="py-8 px-6 text-center border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950">
     <BaseTypography as="small-body" variant="muted">

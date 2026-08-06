@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   /* Musgo (Moss Green) palette - PRIMARY */
   --color-musgo-50: #f0f5f1;
@@ -35,22 +37,25 @@
 /* Light Theme (default) */
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color-scheme: light;
 }
 
 body {
   font-family: var(--font-body);
-  color: #27272a;
-  background-color: #fafaf9;
+  color: #52525b;
+  background-color: #f4f4f5;
   transition: background-color 300ms, color 300ms;
   min-height: 100vh;
 }
 
 /* Dark Theme */
 body.dark {
-  color: #fafaf9;
-  background-color: #09090b;
+  color: #d4d4d8;
+  background-color: #18181b;
+  color-scheme: dark;
 }
 
 ::selection {
@@ -63,30 +68,63 @@ body.dark ::selection {
   color: #fff;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #27272a;
+}
+
+body.dark h1,
+body.dark h2,
+body.dark h3,
+body.dark h4,
+body.dark h5,
+body.dark h6 {
+  color: #e4e4e7;
+}
+
 :focus-visible {
   outline: 2px solid #5a8a5f;
   outline-offset: 2px;
 }
 
-button {
-  font-family: inherit;
-  cursor: pointer;
-  border: none;
-  background: transparent;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
 }
 
-a {
-  color: #4a7250;
-  text-decoration: none;
-  transition: color 150ms;
+p {
+  text-wrap: pretty;
 }
 
-a:hover {
-  color: #3d5d42;
-}
+@layer base {
+  button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+  }
 
-body.dark a:hover {
-  color: #a8c3aa;
+  a {
+    color: #4a7250;
+    text-decoration: none;
+    transition: color 150ms;
+  }
+
+  a:hover {
+    color: #3d5d42;
+  }
+
+  body.dark a:hover {
+    color: #a8c3aa;
+  }
 }
 
 /* Custom font utilities */
@@ -163,11 +201,17 @@ body.dark a:hover {
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   *,
   *::before,
   *::after {
+    animation-delay: 0s !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+    transition-delay: 0s !important;
     transition-duration: 0.01ms !important;
   }
 }

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed, useAttrs } from 'vue'
 
+defineOptions({ inheritAttrs: false })
+
 type BadgeVariant = 'neutral' | 'primary' | 'accent' | 'success' | 'warning' | 'muted'
 type BadgeSize = 'compact' | 'regular'
 type BadgeShape = 'rounded' | 'pill'

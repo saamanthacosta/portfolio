@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed, useAttrs } from 'vue'
 
+defineOptions({ inheritAttrs: false })
+
 type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'icon'
 type ButtonSize = 'sm' | 'md' | 'lg'
 type ButtonElement = 'button' | 'a'
@@ -11,6 +13,7 @@ interface BaseButtonProps {
   element?: ButtonElement
   type?: 'button' | 'submit' | 'reset'
   disabled?: boolean
+  static?: boolean
   href?: string
   target?: string
   rel?: string
@@ -23,6 +26,7 @@ const props = withDefaults(defineProps<BaseButtonProps>(), {
   element: 'button',
   type: 'button',
   disabled: false,
+  static: false,
   href: undefined,
   target: undefined,
   rel: undefined,
@@ -36,13 +40,13 @@ const isLink = computed(() => props.element === 'a' || props.href !== undefined)
 const variantClasses = computed<string>(() => {
   switch (props.variant) {
     case 'primary':
-      return 'bg-musgo-500 hover:bg-musgo-600 text-white hover:-translate-y-0.5 hover:shadow-lg transition-all duration-200'
+      return 'bg-musgo-700 hover:bg-musgo-800 text-white hover:shadow-lg transition-[background-color,box-shadow,transform] duration-200 motion-safe:hover:-translate-y-0.5'
     case 'secondary':
-      return 'bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-900 dark:text-zinc-50 transition-colors duration-150'
+      return 'bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-900 dark:text-zinc-50 transition-[background-color,transform] duration-150'
     case 'ghost':
-      return 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors duration-150'
+      return 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-[background-color,transform] duration-150'
     case 'icon':
-      return 'rounded-lg text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors duration-150'
+      return 'rounded-lg text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-[background-color,transform] duration-150'
   }
 })
 
@@ -63,7 +67,8 @@ const sizeClasses = computed<string>(() => {
 
 const baseClasses = computed<string>(() => {
   const shape = props.variant === 'icon' ? 'rounded-lg' : 'inline-flex items-center justify-center gap-2 rounded-full font-medium'
-  return `cursor-pointer disabled:opacity-50 disabled:pointer-events-none ${shape}`
+  const motion = props.static ? '' : 'motion-safe:active:scale-[0.96]'
+  return `cursor-pointer disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-musgo-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-zinc-950 ${motion} ${shape}`
 })
 
 const combinedClasses = computed<string>(() => [

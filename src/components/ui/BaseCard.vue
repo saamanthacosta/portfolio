@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed, useAttrs } from 'vue'
 
+defineOptions({ inheritAttrs: false })
+
 type CardVariant = 'default' | 'muted' | 'dashed' | 'solid'
 type CardPadding = 'none' | 'sm' | 'md' | 'lg'
 type CardRadius = 'none' | 'sm' | 'md' | 'lg' | 'full'
@@ -33,7 +35,7 @@ const variantClasses = computed<string>(() => {
     case 'muted':
       return 'bg-zinc-50 dark:bg-zinc-800'
     case 'dashed':
-      return 'bg-zinc-50 dark:bg-zinc-800 border-dashed'
+      return 'bg-zinc-50 dark:bg-zinc-800'
     case 'solid':
       return 'bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-700'
   }
@@ -71,13 +73,15 @@ const radiusClasses = computed<string>(() => {
 const borderClasses = computed<string>(() => {
   if (!props.bordered) return ''
   if (props.variant === 'dashed') {
-    return 'border-2 border-zinc-300 dark:border-zinc-600'
+    return 'border-2 border-dashed border-zinc-300 dark:border-zinc-600'
   }
   return 'border border-zinc-200 dark:border-zinc-700'
 })
 
 const hoverClasses = computed<string>(() =>
-  props.hoverable ? 'transition-all duration-200 hover:-translate-y-1 hover:shadow-lg' : '',
+  props.hoverable
+    ? 'transition-[opacity,transform,box-shadow] duration-200 motion-safe:hover:-translate-y-1 motion-safe:hover:shadow-lg'
+    : '',
 )
 
 const combinedClasses = computed<string>(() =>

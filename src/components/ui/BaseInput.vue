@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed, useAttrs, useId } from 'vue'
 
+defineOptions({ inheritAttrs: false })
+
 type InputType = 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'search'
 
 interface BaseInputProps {

@@ -1,53 +1,28 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import BaseCard from '../ui/BaseCard.vue'
 import BaseIcon from '../ui/BaseIcon.vue'
-import BaseTypography from '../ui/BaseTypography.vue'
+import BaseSection from '../ui/BaseSection.vue'
 
-const sectionRef = ref<HTMLElement | null>(null)
-const isVisible = ref(false)
+defineOptions({ inheritAttrs: false })
 
-onMounted(() => {
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      if (entry && entry.isIntersecting) {
-        isVisible.value = true
-        observer.disconnect()
-      }
-    },
-    { threshold: 0.1 },
-  )
-
-  if (sectionRef.value) {
-    observer.observe(sectionRef.value)
-  }
-})
+const { t } = useI18n()
 </script>
 
 <template>
-  <section id="projects" class="py-24 md:py-32 bg-white dark:bg-zinc-900" ref="sectionRef">
-    <div class="max-w-3xl mx-auto px-6">
-      <div
-        class="text-center mb-12 transition-all duration-500 ease-out"
-        :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'"
-      >
-        <BaseTypography as="caption" variant="accent" class="mb-4">
-          {{ $t('projects.label') }}
-        </BaseTypography>
-        <BaseTypography as="h2" class="mb-4">
-          {{ $t('projects.title') }}
-        </BaseTypography>
-        <BaseTypography as="large-body" variant="muted">
-          {{ $t('projects.description') }}
-        </BaseTypography>
-      </div>
-
+  <BaseSection
+    id="projects"
+    bg="raised"
+    :label="t('projects.label')"
+    :title="t('projects.title')"
+    :subtitle="t('projects.description')"
+  >
+    <template #default="{ isVisible }">
       <BaseCard
         variant="dashed"
         padding="none"
         radius="lg"
-        :bordered="false"
-        class="flex flex-col items-center justify-center min-h-[300px] relative overflow-hidden transition-all duration-500 ease-out"
+        class="flex flex-col items-center justify-center min-h-[300px] relative overflow-hidden transition-[opacity,transform] duration-500 ease-out"
         :style="{ transitionDelay: '0.3s' }"
         :class="isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'"
       >
@@ -63,6 +38,6 @@ onMounted(() => {
           <div class="absolute bottom-[15%] left-[20%] w-12 h-12 bg-pink-100 dark:bg-pink-900/30 rounded-full opacity-30" />
         </div>
       </BaseCard>
-    </div>
-  </section>
+    </template>
+  </BaseSection>
 </template>
