@@ -76,10 +76,10 @@ const highlights: Highlight[] = [
             padding="md"
             radius="md"
             :style="{ transitionDelay: `${index * 0.1}s` }"
-            :class="['transition-all duration-500 text-center', isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4']"
+            :class="['transition-all duration-500', isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4']"
           >
-            <div class="flex flex-col items-center gap-2">
-              <div class="w-11 h-11 rounded-lg bg-musgo-100 dark:bg-musgo-900 flex items-center justify-center">
+            <div class="flex items-center justify-center gap-3">
+              <div class="w-11 h-11 rounded-lg bg-musgo-100 dark:bg-musgo-900 flex items-center justify-center flex-shrink-0">
                 <component
                   :is="item.icon"
                   :size="22"
@@ -88,7 +88,7 @@ const highlights: Highlight[] = [
                   aria-hidden="true"
                 />
               </div>
-              <BaseTypography as="small-body" variant="muted" class="font-medium leading-snug">
+              <BaseTypography as="small-body" variant="muted" class="font-medium leading-snug text-center">
                 {{ $t(`about.highlights.${item.key}`) }}
               </BaseTypography>
             </div>
