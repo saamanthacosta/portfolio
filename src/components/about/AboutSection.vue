@@ -55,7 +55,7 @@ const highlights: Highlight[] = [
                 :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'"
                 :style="{ transitionDelay: `${0.4 + index * 0.1}s` }"
               >
-                <div class="flex items-center justify-center gap-3 text-center">
+                <div class="flex items-center gap-3 text-center">
                   <div class="w-10 h-10 rounded-lg bg-musgo-100 dark:bg-musgo-900 flex items-center justify-center flex-shrink-0">
                     <BaseIcon class="text-musgo-600 dark:text-musgo-400" decorative>
                       <path :d="item.icon" />

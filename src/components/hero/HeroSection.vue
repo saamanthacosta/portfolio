@@ -75,7 +75,7 @@ const getPosition = (config: FlowerPosition | LeafPosition): Record<string, stri
 </script>
 
 <template>
-  <section id="hero" class="min-h-screen min-h-[100dvh] flex items-center justify-center relative overflow-hidden bg-zinc-50 dark:bg-zinc-950">
+  <section id="hero" class="min-h-dvh flex items-center justify-center relative overflow-hidden bg-zinc-50 dark:bg-zinc-950">
     <div
       v-for="(flower, index) in flowers"
       :key="`flower-${index}`"
@@ -101,26 +101,26 @@ const getPosition = (config: FlowerPosition | LeafPosition): Record<string, stri
         :animation-delay="leaf.delay"
       />
     </div>
-
-    <div class="text-center z-10 max-w-3xl px-6 py-24 md:py-32">
-      <span class="inline-block bg-musgo-100 dark:bg-musgo-900 text-musgo-700 dark:text-musgo-300 px-4 py-2 rounded-full text-sm font-semibold mb-6">
+    <div class="text-center z-10 max-w-5xl px-6 py-24 md:py-32 gap-2">
+      <span class="inline-block bg-musgo-100 dark:bg-musgo-900 text-musgo-700 dark:text-musgo-300 px-4 py-2 rounded-full text-sm font-semibold">
         {{ t('hero.tag') }}
       </span>
 
-      <BaseTypography as="h1" class="mb-4">
+      <BaseTypography as="h1" class="mt-2 flex flex-col md:flex-row gap-3">
         <span class="block">{{ t('hero.name') }}</span>
         <span class="block text-pink-600 dark:text-pink-400">{{ t('hero.lastName') }}</span>
       </BaseTypography>
 
-      <BaseTypography as="large-body" variant="muted" class="mb-2 font-medium">
+      <BaseTypography as="large-body" variant="muted" class="mt-2 font-medium">
         {{ t('hero.role') }}
       </BaseTypography>
 
-      <BaseTypography as="small-body" variant="muted" class="mb-10">
+      <BaseTypography as="small-body" variant="muted">
         {{ t('hero.location') }}
       </BaseTypography>
 
       <BaseButton
+       class="mt-8"
         element="a"
         href="#about"
         variant="primary"
