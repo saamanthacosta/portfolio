@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import BaseCard from '../ui/BaseCard.vue'
 import BaseIcon from '../ui/BaseIcon.vue'
+import BaseSection from '../ui/BaseSection.vue'
 import BaseTypography from '../ui/BaseTypography.vue'
 
 interface Highlight {
@@ -9,10 +11,15 @@ interface Highlight {
   icon: string
 }
 
-const sectionRef = ref<HTMLElement | null>(null)
+defineOptions({ inheritAttrs: false })
+
+const { t } = useI18n()
+const sectionRef = ref<InstanceType<typeof BaseSection> | null>(null)
 const isVisible = ref(false)
 
 onMounted(() => {
+  const el = sectionRef.value?.$el as HTMLElement | undefined
+  if (!el) return
   const observer = new IntersectionObserver(
     ([entry]) => {
       if (entry && entry.isIntersecting) {
@@ -22,10 +29,7 @@ onMounted(() => {
     },
     { threshold: 0.1 },
   )
-
-  if (sectionRef.value) {
-    observer.observe(sectionRef.value)
-  }
+  observer.observe(el)
 })
 
 const highlights: Highlight[] = [
@@ -40,21 +44,30 @@ const highlights: Highlight[] = [
 </script>
 
 <template>
-  <section id="about" class="py-24 md:py-32 bg-white dark:bg-zinc-900 relative" ref="sectionRef">
-    <div class="max-w-5xl mx-auto px-6">
+  <BaseSection ref="sectionRef" id="about" bg="raised" max-width="5xl">
+    <template #header>
+      <div
+        class="transition-[opacity,transform] duration-500 ease-out"
+        :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'"
+      >
+        <BaseTypography as="caption" variant="accent" class="mb-4 block">
+          {{ t('about.label') }}
+        </BaseTypography>
+        <BaseTypography as="h2">
+          {{ t('about.title') }}
+        </BaseTypography>
+      </div>
+    </template>
+
+    <div
+      class="transition-[opacity,transform] duration-500 ease-out"
+      :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'"
+      :style="{ transitionDelay: '0.15s' }"
+    >
       <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
-        <div
-          class="transition-all duration-500 ease-out"
-          :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'"
-        >
-          <BaseTypography as="caption" variant="accent" class="mb-4">
-            {{ $t('about.label') }}
-          </BaseTypography>
-          <BaseTypography as="h2" class="mb-6 leading-tight">
-            {{ $t('about.title') }}
-          </BaseTypography>
+        <div>
           <BaseTypography as="large-body" variant="muted" class="mb-8 leading-relaxed">
-            {{ $t('about.description') }}
+            {{ t('about.description') }}
           </BaseTypography>
 
           <div class="grid grid-cols-2 gap-4">
@@ -64,18 +77,18 @@ const highlights: Highlight[] = [
               variant="muted"
               padding="sm"
               radius="sm"
-              class="transition-all duration-300"
+              class="transition-[opacity,transform] duration-300"
               :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'"
-              :style="{ transitionDelay: `${0.6 + index * 0.1}s` }"
+              :style="{ transitionDelay: `${0.4 + index * 0.1}s` }"
             >
-              <div class="flex items-start gap-3">
+              <div class="flex items-center justify-center gap-3 text-center">
                 <div class="w-10 h-10 rounded-lg bg-musgo-100 dark:bg-musgo-900 flex items-center justify-center flex-shrink-0">
                   <BaseIcon class="text-musgo-600 dark:text-musgo-400" decorative>
                     <path :d="item.icon" />
                   </BaseIcon>
                 </div>
-                <BaseTypography as="small-body" variant="muted" class="pt-2 font-medium">
-                  {{ $t(`about.highlights.${item.key}`) }}
+                <BaseTypography as="small-body" variant="muted" class="font-medium">
+                  {{ t(`about.highlights.${item.key}`) }}
                 </BaseTypography>
               </div>
             </BaseCard>
@@ -84,25 +97,25 @@ const highlights: Highlight[] = [
 
         <div class="hidden md:flex relative justify-center items-center aspect-square max-w-md mx-auto">
           <div
-            class="absolute w-4/5 h-4/5 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full transition-all duration-700 ease-out"
+            class="absolute w-4/5 h-4/5 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full transition-[opacity,transform] duration-700 ease-out"
             :class="isVisible ? 'opacity-60 scale-100' : 'opacity-0 scale-90'"
             style="background: linear-gradient(135deg, #f0f5f1 0%, #fdf2f2 100%);"
           />
           <div
-            class="absolute w-3/5 h-3/5 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full transition-all duration-700 delay-200 ease-out"
+            class="absolute w-3/5 h-3/5 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full transition-[opacity,transform] duration-700 delay-200 ease-out"
             :class="isVisible ? 'opacity-60 scale-100' : 'opacity-0 scale-90'"
             style="background: linear-gradient(135deg, #fdf2f2 0%, #f0f5f1 100%);"
           />
           <div class="absolute text-center z-10">
-            <BaseTypography as="h1" variant="primary" class="text-7xl block">
+            <BaseTypography as="span" variant="primary" class="text-7xl block tabular-nums">
               5+
             </BaseTypography>
             <BaseTypography as="small-body" variant="muted" class="mt-2 block">
-              Years Experience
+              {{ t('about.yearsExperience') }}
             </BaseTypography>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </BaseSection>
 </template>

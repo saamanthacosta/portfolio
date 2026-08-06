@@ -18,6 +18,7 @@
     "label": "About",
     "title": "Building the web with purpose",
     "description": "I'm a software engineer with 5+ years of experience creating, implementing, maintaining, and optimizing complex systems, especially front-end applications. I specialize in making interfaces mobile-first, customizable, accessible, and internationalized.",
+    "yearsExperience": "Years experience",
     "highlights": {
       "a11y": "Web Accessibility",
       "i18n": "Internationalization",
@@ -30,6 +31,9 @@
     "title": "My journey",
     "currentlyHere": "Currently here",
     "confidential": "Project details are confidential",
+    "confidentialDescription": "Currently working on confidential projects. Building accessible, performant web applications with modern technologies.",
+    "techStack": "Tech stack",
+    "ariaLabel": "Experience",
     "items": {
       "dosable": {
         "company": "Dosable",
@@ -74,6 +78,25 @@
       "backend": "Backend",
       "cloud": "Cloud",
       "database": "Database"
+    },
+    "items": {
+      "html-css": "HTML/CSS",
+      "javascript": "JavaScript",
+      "typescript": "TypeScript",
+      "vue": "Vue.js",
+      "react": "React.js",
+      "web-accessibility": "Web Accessibility",
+      "state-management": "Vuex/Pinia",
+      "tailwind": "Tailwind",
+      "styled-components": "Styled Components",
+      "node-js": "Node.js",
+      "express": "Express",
+      "csharp": "C#",
+      "php": "PHP",
+      "aws": "AWS",
+      "azure": "Azure",
+      "mysql": "MySQL",
+      "sql-server": "SQL Server"
     }
   },
   "projects": {
@@ -95,6 +118,19 @@
   "accessibility": {
     "themeToggle": "Toggle theme",
     "languageToggle": "Switch language",
-    "scrollToTop": "Scroll to top"
+    "selectLanguage": "Select language",
+    "scrollToTop": "Scroll to top",
+    "skipToContent": "Skip to content",
+    "openMenu": "Open navigation menu",
+    "closeMenu": "Close navigation menu",
+    "mobileNavigation": "Mobile navigation",
+    "mainNavigation": "Main navigation",
+    "lightMode": "Light mode",
+    "darkMode": "Dark mode",
+    "systemMode": "System mode",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "themeOptions": "Theme options"
   }
 }

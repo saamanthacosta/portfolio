@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, nextTick, ref } from 'vue'
 import { useTheme, type Theme } from '../../composables/useTheme'
+import { useI18n } from 'vue-i18n'
 import BaseButton from '../ui/BaseButton.vue'
 import BaseIcon from '../ui/BaseIcon.vue'
 
@@ -13,6 +14,7 @@ interface ThemeOption {
 }
 
 const { theme, setTheme } = useTheme()
+const { t } = useI18n()
 const isOpen = ref(false)
 
 const icon = computed<ThemeIcon>(() => {
@@ -29,39 +31,119 @@ const icon = computed<ThemeIcon>(() => {
 const label = computed<string>(() => {
   switch (theme.value) {
     case 'light':
-      return 'Light mode'
+      return t('accessibility.lightMode')
     case 'dark':
-      return 'Dark mode'
+      return t('accessibility.darkMode')
     default:
-      return 'System mode'
+      return t('accessibility.systemMode')
   }
 })
 
-const options: ThemeOption[] = [
-  { value: 'light', label: 'Light', icon: 'sun' },
-  { value: 'dark', label: 'Dark', icon: 'moon' },
-  { value: 'system', label: 'System', icon: 'monitor' },
-]
+const options = computed<ThemeOption[]>(() => [
+  { value: 'light', label: t('accessibility.light'), icon: 'sun' },
+  { value: 'dark', label: t('accessibility.dark'), icon: 'moon' },
+  { value: 'system', label: t('accessibility.system'), icon: 'monitor' },
+])
+
+const menuId = 'theme-menu'
+const containerRef = ref<HTMLElement | null>(null)
+const menuRef = ref<HTMLElement | null>(null)
+const focusedOptionIndex = ref(0)
+
+const getOptionButtons = () =>
+  Array.from(
+    menuRef.value?.querySelectorAll<HTMLButtonElement>('[role="menuitemradio"]') ?? [],
+  )
+
+const restoreTriggerFocus = () => {
+  containerRef.value?.querySelector<HTMLElement>('[aria-expanded]')?.focus()
+}
+
+const focusOption = (index: number) => {
+  focusedOptionIndex.value = index
+  getOptionButtons()[index]?.focus()
+}
+
+const closeDropdown = () => {
+  isOpen.value = false
+}
+
+const closeDropdownAndRestoreFocus = () => {
+  isOpen.value = false
+  void nextTick(restoreTriggerFocus)
+}
 
 const toggleDropdown = (event: MouseEvent) => {
   event.stopPropagation()
   isOpen.value = !isOpen.value
+
+  if (isOpen.value) {
+    const selectedIndex = options.value.findIndex((option) => option.value === theme.value)
+    focusedOptionIndex.value = selectedIndex >= 0 ? selectedIndex : 0
+
+    if (event.detail === 0) {
+      void nextTick(() => focusOption(focusedOptionIndex.value))
+    }
+  }
 }
 
 const selectTheme = (themeValue: Theme) => {
   setTheme(themeValue)
-  isOpen.value = false
+  closeDropdownAndRestoreFocus()
+}
+
+const handleMenuKeydown = (event: KeyboardEvent) => {
+  const optionButtons = getOptionButtons()
+  const currentIndex = optionButtons.indexOf(document.activeElement as HTMLButtonElement)
+
+  if (event.key === 'Escape') {
+    event.preventDefault()
+    closeDropdownAndRestoreFocus()
+    return
+  }
+
+  if (event.key === 'Tab') {
+    requestAnimationFrame(closeDropdown)
+    return
+  }
+
+  if (optionButtons.length === 0) return
+
+  const startIndex = currentIndex >= 0 ? currentIndex : focusedOptionIndex.value
+  let nextIndex = startIndex
+  if (event.key === 'ArrowDown') nextIndex = (startIndex + 1) % optionButtons.length
+  if (event.key === 'ArrowUp') nextIndex = (startIndex - 1 + optionButtons.length) % optionButtons.length
+  if (event.key === 'Home') nextIndex = 0
+  if (event.key === 'End') nextIndex = optionButtons.length - 1
+
+  if (['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) {
+    event.preventDefault()
+    if (nextIndex !== startIndex) {
+      focusOption(nextIndex)
+    }
+  }
+}
+
+const handleMenuFocusout = (event: FocusEvent) => {
+  const nextTarget = event.relatedTarget as Node | null
+  if (!nextTarget || !containerRef.value?.contains(nextTarget)) {
+    closeDropdown()
+  }
 }
 </script>
 
 <template>
-  <div class="relative">
+  <div ref="containerRef" class="relative" v-click-outside="closeDropdown">
     <BaseButton
       variant="icon"
       :aria-label="label"
       :title="label"
       :aria-expanded="isOpen"
+      aria-haspopup="menu"
+      :aria-controls="menuId"
       @click="toggleDropdown"
+      @keydown.esc="closeDropdownAndRestoreFocus"
+      @keydown.tab="closeDropdown"
     >
       <BaseIcon v-if="icon === 'sun'" size="md" decorative>
         <circle cx="12" cy="12" r="5" />
@@ -85,21 +167,32 @@ const selectTheme = (themeValue: Theme) => {
     </BaseButton>
 
     <Transition
-      enter-active-class="transition-all duration-150 ease-out"
+      enter-active-class="transition-[opacity,transform] duration-150 ease-out"
       enter-from-class="opacity-0 -translate-y-2"
       enter-to-class="opacity-100 translate-y-0"
-      leave-active-class="transition-all duration-100 ease-in"
+      leave-active-class="transition-[opacity,transform] duration-100 ease-out"
       leave-from-class="opacity-100 translate-y-0"
       leave-to-class="opacity-0 -translate-y-2"
     >
       <div
         v-if="isOpen"
+        ref="menuRef"
+        :id="menuId"
+        role="menu"
+        :aria-label="t('accessibility.themeOptions')"
         @click.stop
+        @keydown="handleMenuKeydown"
+        @focusout="handleMenuFocusout"
         class="absolute right-0 mt-2 w-40 bg-white dark:bg-zinc-800 rounded-xl shadow-xl border border-zinc-200 dark:border-zinc-700 py-2 z-50"
       >
+
         <button
-          v-for="option in options"
+          v-for="(option, index) in options"
           :key="option.value"
+          type="button"
+          role="menuitemradio"
+          :aria-checked="theme === option.value"
+          :tabindex="focusedOptionIndex === index ? 0 : -1"
           @click="selectTheme(option.value)"
           class="w-full flex items-center gap-3 px-4 py-2.5 text-sm transition-colors duration-100 cursor-pointer"
           :class="theme === option.value

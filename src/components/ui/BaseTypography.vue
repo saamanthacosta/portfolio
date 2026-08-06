@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed, useAttrs } from 'vue'
 
+defineOptions({ inheritAttrs: false })
+
 type TypographyAs =
   | 'h1'
   | 'h2'
@@ -64,27 +66,28 @@ const resolvedElement = computed(() => {
 const typographyClasses = computed<string>(() => {
   switch (props.as) {
     case 'h1':
-      return 'font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl'
+      return 'font-heading text-balance text-4xl sm:text-5xl md:text-6xl lg:text-7xl'
     case 'h2':
-      return 'font-heading text-3xl md:text-4xl'
+      return 'font-heading text-balance text-3xl md:text-4xl'
     case 'h3':
-      return 'font-heading text-xl md:text-2xl'
+      return 'font-heading text-balance text-xl md:text-2xl'
     case 'h4':
-      return 'font-heading text-lg md:text-xl'
+      return 'font-heading text-balance text-lg md:text-xl'
     case 'h5':
-      return 'font-body text-base md:text-lg font-semibold'
+      return 'font-body text-balance text-base md:text-lg font-semibold'
     case 'h6':
-      return 'font-body text-sm md:text-base font-semibold'
+      return 'font-body text-balance text-sm md:text-base font-semibold'
     case 'large-body':
-      return 'text-lg leading-relaxed'
+      return 'text-pretty text-lg leading-relaxed'
     case 'small-body':
-      return 'text-sm'
+      return 'text-pretty text-sm'
     case 'caption':
       return 'text-xs font-semibold uppercase tracking-wider'
     case 'mono':
-      return 'font-mono text-xs font-medium'
+      return 'font-mono tabular-nums text-xs font-medium'
     case 'body':
     case 'p':
+      return 'text-pretty text-base'
     case 'span':
     case 'div':
     case 'label':

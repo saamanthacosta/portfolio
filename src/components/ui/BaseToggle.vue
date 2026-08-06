@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed, useAttrs, useId } from 'vue'
 
+defineOptions({ inheritAttrs: false })
+
 interface BaseToggleProps {
   modelValue: boolean
   label?: string

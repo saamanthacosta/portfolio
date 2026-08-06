@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed, useAttrs } from 'vue'
 
+defineOptions({ inheritAttrs: false })
+
 type IconSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
 interface BaseIconProps {
